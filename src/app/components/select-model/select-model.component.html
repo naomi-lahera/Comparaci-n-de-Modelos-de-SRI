@@ -57,7 +57,10 @@
                 </div>
             </div>
         </div>
-
-        <button pButton pRipple label="Next" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" [routerLink]="['/search']"></button>
-    </div>
+        <div class="flex justify-content-center flex-wrap gap-3 mb-4">
+            <p-button pRipple icon="pi pi-arrow-left" [rounded]="true" [routerLink]="['/']"></p-button>
+            <p-button pRipple icon="pi pi-arrow-right" [rounded]="true" [routerLink]="['/search']"></p-button>
+            <!-- <button pButton pRipple label="Next" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" "></button> -->
+        </div>
+        </div>
 </div>
