@@ -1,7 +1,9 @@
+import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 import { FormsModule } from '@angular/forms';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -17,9 +19,11 @@ import { RippleModule } from 'primeng/ripple';
     CommonModule
   ],
   exports:[
-    CheckboxModule,
-    CommonModule,
     ButtonModule,
+    CheckboxModule,
+    ChartModule,
+    CommonModule,
+    DividerModule,
     FormsModule,
     InputGroupModule,
     InputGroupAddonModule,
