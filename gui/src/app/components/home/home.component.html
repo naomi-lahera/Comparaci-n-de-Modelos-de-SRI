@@ -1,0 +1,22 @@
+
+<div class="grid grid-nogutter surface-section text-800">
+    <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+        <section>
+            <span class="block text-6xl font-bold mb-1">Sistemas de Recuperación de la Información</span>
+            <div class="text-6xl text-primary font-bold mb-3">Comparación de Modelos</div>
+            <p class="mt-0 mb-4 text-700 line-height-3">
+                Localizacion de materiales de
+                naturaleza no estructurada cuyo objetivo es satisfacer una necesidad de información en
+                una larga colección. 
+            </p>
+            <div class="flex flex-wrap gap-3 mb-4">
+                <p-button pRipple label="Comenzar" [rounded]="true" [routerLink]="['/select-model']"></p-button>
+            </div>
+        </section>
+    </div>
+    <div class="col-12 md:col-6 overflow-hidden">
+        <div class="card">
+            <p-chart type="line" [data]="data" [options]="options"></p-chart>
+        </div>
+    </div>
+</div>
