@@ -2,7 +2,7 @@
 import math
 from query_preppro import query_to_dnf
 from tfxidf_load import load_mat, load_vec
-from ..data.code.process import corpus
+from ...data.code.process import corpus
 import prepro
 import sympy
 
