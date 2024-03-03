@@ -3,9 +3,19 @@ from prepro import preprocess_documents
 import prepro
 
 def query_to_dnf(query):
-    query = prepro.preprocess_documents([query], True)[0]
+    query = prepro.preprocess_documents([query.lower], True)[0]
     
-    processed_query = query.lower().replace('and', '&').replace('&&', '|').replace('or', '|').replace('||', '|').replace('not', '~')
+    temporal_query = query.split()
+    
+    operators = ['and', 'or', 'not']
+    
+    query = temporal_query[0]
+    
+    for i in range(len(temporal_query) - 1):
+        if not temporal_query[i] in operators and not temporal_query[i + 1] in operators:
+            query += ' and ' + temporal_query[i + 1]
+            
+    processed_query = query.replace('and', '&').replace('&&', '|').replace('or', '|').replace('||', '|').replace('not', '~')
     
     try:
         # Convertir a expresión sympy y aplicar to_dnf. Cuando no existe operador entre un literal y un parentesis abiierto Sympy asume que es un AND
