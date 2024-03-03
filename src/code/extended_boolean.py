@@ -1,10 +1,8 @@
-
 import math
 from query_preppro import query_to_dnf
-from tfxidf_load import load_mat, load_vec
-from ..data.code.process import corpus
-import prepro
+from ...data.code.process import corpus
 import sympy
+import joblib
 
 first = True
 _corpus = corpus('cranfield', 10)
@@ -50,11 +48,13 @@ def sim(query_list, query_dnf):
                     _and += math.pow(1 - tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - (1 - math.pow(tfxidf_term, literals_total))
                
                 # Calculo la raiz p-esima 
-                _or += 1 - math.sqrt(_and/_and_count, 1/literals_total)
+                _or += math.pow(1 - math.sqrt(_and/_and_count, 1/literals_total), literals_total)
         
         scores.update(doc.index, math.pow(_or / _or_count, literals_total))
+    scores = dict(sorted(scores.items(), key=lambda item: item[1]))
+    print([doc[0] for doc in scores.items])
                     
-def init(query):
+def init():
     global first
     global matrix
     global feature_names
@@ -63,7 +63,7 @@ def init(query):
     mat_url = f'./../data/cranfield_matrix.joblib'
     
     if first:
-        matrix = load_mat(mat_url)   
+        matrix = joblib.load(mat_url)  
         feature_names = matrix.get_feature_names()
         extended_matrix = matrix.fit_transform(_corpus.preprocess_docs)
         first = False
@@ -91,6 +91,5 @@ def get_literals_from_dnf(dnf):
     return literals
     
     
-# test_query = 'A or c and b'
-# get_similar_docs(test_query)
-# # sim('A or c and b')
+test_query = 'house or number and value'
+get_similar_docs(test_query)
