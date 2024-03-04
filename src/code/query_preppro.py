@@ -3,9 +3,9 @@ from prepro import preprocess_documents
 import prepro
 
 def query_to_dnf(query):
-    query = prepro.preprocess_documents([query.lower], True)[0]
+    query = prepro.preprocess_documents([query.lower],True)[0]
     
-    temporal_query = query.split()
+    temporal_query = query
     
     operators = ['and', 'or', 'not']
     

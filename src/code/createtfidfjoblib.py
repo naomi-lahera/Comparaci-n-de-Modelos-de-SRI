@@ -10,7 +10,7 @@ def save_info_to_Joblib(docs, docs_num, corpus_name):
     documents = list(docs)
 
     # Preprocesamiento de los documentos
-    preprocessed_docs = prepro.preprocess_documents(documents)
+    preprocessed_docs = prepro.preprocess_documents(documents,False)
 
     # Convertir cada lista de tokens en una cadena única
     preprocessed_docs = [' '.join(doc) for doc in preprocessed_docs]

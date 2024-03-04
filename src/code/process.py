@@ -16,7 +16,7 @@ class corpus:
         # Obtener cada texto por cada documentos
         self.docs = [doc.text for doc in self.docs_iter]
         # Procesar los documentos
-        self.preprocessed_docs = prepro.preprocess_documents(self.docs)
+        self.preprocessed_docs = prepro.preprocess_documents(self.docs,False)
         # Convertir cada lista de tokens en una cadena única
         self.preprocessed_docs = [' '.join(doc) for doc in self.preprocessed_docs]
         
@@ -32,7 +32,7 @@ class corpus:
     
         # Obtener el vocabulario
         self.vocabulary = self.tfidf_vectorizer.vocabulary_
-        print('vocabulary: ',self.vocabulary)
+        #print('vocabulary: ',self.vocabulary)
         
         # Crea un jblin con los valores de tfxidf con la coleccion de documentos y se puede modificar la cantidad de documentos a escoger 
         save_info_to_Joblib(self.docs, docs_num, data_name)

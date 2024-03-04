@@ -1,8 +1,10 @@
 import math
 from query_preppro import query_to_dnf
-from ...data.code.process import corpus
 import sympy
 import joblib
+from process import corpus
+
+
 
 first = True
 _corpus = corpus('cranfield', 10)
@@ -60,7 +62,7 @@ def init():
     global feature_names
     global extended_matrix
     
-    mat_url = f'./../data/cranfield_matrix.joblib'
+    mat_url = f'./../cranfield_matrix.joblib'
     
     if first:
         matrix = joblib.load(mat_url)  

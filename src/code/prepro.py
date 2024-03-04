@@ -6,7 +6,7 @@ nlp = spacy.load("en_core_web_sm")
 
 #Tokenizamos
 def tokenization_spacy(texts):
-  return [[token for token in nlp(doc)] for doc in texts]
+  return [[token for token in nlp(str(doc))] for doc in texts]
 
 #Eliminamos el ruido
 def remove_noise_spacy(tokenized_docs):
