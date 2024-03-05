@@ -22,13 +22,14 @@ class CranfieldData:
         return qrels
 
 def main():
-    cranfield_data = CranfieldData()
+    #cranfield_data = CranfieldData()
     
-    docs = getDocs('house or number and value')
+    docs = getDocs('bind or number and value')
+    print(docs)
     # Acceso a las variables públicas de la clase
-    print("Query pairs:")
-    for query_id, query_text in cranfield_data.query_pairs:
-        print(f"Query ID: {query_id}, Query Text: {query_text}")
+    # print("Query pairs:")
+    # for query_id, query_text in cranfield_data.query_pairs:
+    #     print(f"Query ID: {query_id}, Query Text: {query_text}")
     
     # print("\nQrels:")
     # for query_id, doc_id, relevance in cranfield_data.qrels:

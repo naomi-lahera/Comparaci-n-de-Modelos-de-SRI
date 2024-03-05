@@ -66,15 +66,15 @@ def sim(query_list, query_dnf):
                     tfxidf_term = get_tfidf_value(doc_index,term_index)
                     
                     _and += math.pow(1 - tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - (1 - math.pow(tfxidf_term, literals_total))
-               
+
                 # Calculo la raiz p-esima 
                 _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
         
         scores.update({doc_index: math.pow(_or / _or_count, literals_total)})
 
     scores = dict(sorted(scores.items(), key=lambda item: item[1]))
-    print([doc[0] for doc in scores.items()])
-    return [(doc_id, score) for doc_id, score in scores]
+    #print([doc[0] for doc in scores.items()])
+    return scores
 
                     
 def init():
