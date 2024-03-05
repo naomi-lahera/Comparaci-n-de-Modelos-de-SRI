@@ -129,10 +129,10 @@ def get_similar_docs(query):
     print(f"Tiempo de ejecución de init: {elapsed_time} segundos")
 
     start_time = time.time()
-    sim(query_literals, query_dnf)
+    scores = sim(query_literals, query_dnf)
     elapsed_time = time.time() - start_time
     print(f"Tiempo de ejecución de sim: {elapsed_time} segundos")
-
+    return scores
 
 def get_literals_from_dnf(dnf):
     literals = []
