@@ -74,6 +74,7 @@ def sim(query_list, query_dnf):
 
     scores = dict(sorted(scores.items(), key=lambda item: item[1]))
     print([doc[0] for doc in scores.items()])
+    return [(doc_id, score) for doc_id, score in scores]
 
                     
 def init():
