@@ -21,6 +21,69 @@ class CranfieldData:
             qrels.append((qrel.query_id, qrel.doc_id, qrel.relevance))
         return qrels
 
+class QueryMetrics:
+    def __init__(self):
+        self.metrics = {}
+
+    def add_query_metrics(self, query_id, precision, recall, f_measure, f1_measure, r_precision):
+        """Agrega las métricas para una query específica."""
+        self.metrics[query_id] = {
+            'Precision': precision,
+            'Recall': recall,
+            'F-Measure': f_measure,
+            'F1-Measure': f1_measure,
+            'R-Precision': r_precision
+        }
+
+    def get_query_metrics(self, query_id):
+        """Obtiene las métricas para una query específica."""
+        return self.metrics.get(query_id, {})
+
+    def get_all_metrics(self):
+        """Obtiene todas las métricas para todas las queries."""
+        return self.metrics
+
+class MetricsCalculator:
+
+    @staticmethod
+    def precision(relevant_retrieved, irrelevant_retrieved):
+        """Calculates the fraction of retrieved information that is relevant."""
+        union = relevant_retrieved.union(irrelevant_retrieved)
+        if len(union) == 0:
+            return 0
+        return len(relevant_retrieved) / len(union)
+
+    @staticmethod
+    def recall(relevant_retrieved, relevant_not_retrieved):
+        """Calculates recall."""
+        union = relevant_retrieved.union(relevant_not_retrieved)
+        if len(union) == 0:
+            return 0
+        return len(relevant_retrieved) / len(union)
+
+    @staticmethod
+    def f_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved, beta=1):
+        """Calculates F-measure."""
+        precision = MetricsCalculator.precision(relevant_retrieved, irrelevant_retrieved)
+        recall = MetricsCalculator.recall(relevant_retrieved, relevant_not_retrieved)
+        if precision + recall == 0:
+            return 0
+        return (1 + beta**2) * (precision * recall) / ((beta**2 * precision) + recall)
+
+    @staticmethod
+    def f1_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved):
+        """Calculates F1-measure."""
+        return MetricsCalculator.f_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved, beta=1)
+
+    @staticmethod
+    def r_precision(relevant_retrieved, irrelevant_retrieved):
+        """Calculates R-Precision."""
+        union = relevant_retrieved.union(irrelevant_retrieved)
+        if len(union) == 0:
+            return 0
+        return len(relevant_retrieved) / len(union)
+
+        
 def main():
     #cranfield_data = CranfieldData()
     
