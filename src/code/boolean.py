@@ -1,7 +1,7 @@
 from query_preppro import query_to_dnf
 from process import corpus
 
-corpu = corpus('',10)
+corpu = corpus('',10) 
 query = query_to_dnf('paper or number and value')
 
 def similarity(query_dnf, tokenized_docs):
