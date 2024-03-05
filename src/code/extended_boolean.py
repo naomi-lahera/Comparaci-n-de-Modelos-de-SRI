@@ -5,9 +5,13 @@ import joblib
 from process import corpus
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
+import time
 
 first = True
-_corpus = corpus('cranfield', 10)
+start_time = time.time()
+_corpus = corpus("", 10)
+elapsed_time = time.time() - start_time
+print(f"Tiempo de ejecución de corpus: {elapsed_time} segundos")
 matrix = ''
 vectorizer = ''
 feature_names = dict()
@@ -18,11 +22,13 @@ def get_tfidf_value(document_text, word):
     global feature_names
     
     #tfidf_matrix = vectorizer.transform([document_text]).todense()
-    tfidf_matrix = matrix[document_text].todense()
     
+    #tfidf_matrix = matrix[document_text].todense()
+    
+    #print(tfidf_matrix)
     #feature_index = tfidf_matrix[0,:].nonzero()[1]
     try:
-        result = tfidf_matrix[0, word] 
+        result = matrix[document_text,word] 
         return result
     except:
         return 0
@@ -42,7 +48,11 @@ def sim(query_list, query_dnf):
                 # Obtener el termino
                 term = clause.as_independent(*clause.free_symbols)[1]
                 # Obtener el indice del termino en la matriz
-                term_index = feature_names[str(term)]
+                try:
+                    term_index = feature_names[str(term)]
+                except:
+                    continue
+                 
                 
                 # Ver el valor de la matriz en la posicion doc, term
                 #tfxidf_term = extended_matrix[doc.index, term_index]
@@ -72,8 +82,16 @@ def sim(query_list, query_dnf):
         
         scores.update({doc_index: math.pow(_or / _or_count, literals_total)})
 
+<<<<<<< HEAD
     scores = dict(sorted(scores.items(), key=lambda item: item[1]))
     #print([doc[0] for doc in scores.items()])
+=======
+    scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
+
+    
+    for i, (doc, val) in enumerate(scores.items()):
+        print(f'{doc} , {val}')
+>>>>>>> 1testing
     return scores
 
                     
@@ -96,14 +114,30 @@ def init():
         first = False
         
     
+
 def get_similar_docs(query):
+    start_time = time.time()
     query_dnf = query_to_dnf(query)
     print(query_dnf)
-    
+    elapsed_time = time.time() - start_time
+    print(f"Tiempo de ejecución de query_to_dnf: {elapsed_time} segundos")
+
+    start_time = time.time()
     query_literals = get_literals_from_dnf(query_dnf)
     print(query_literals)
+    elapsed_time = time.time() - start_time
+    print(f"Tiempo de ejecución de get_literals_from_dnf: {elapsed_time} segundos")
+
+    start_time = time.time()
     init()
+    elapsed_time = time.time() - start_time
+    print(f"Tiempo de ejecución de init: {elapsed_time} segundos")
+
+    start_time = time.time()
     sim(query_literals, query_dnf)
+    elapsed_time = time.time() - start_time
+    print(f"Tiempo de ejecución de sim: {elapsed_time} segundos")
+
 
 def get_literals_from_dnf(dnf):
     literals = []
@@ -112,8 +146,9 @@ def get_literals_from_dnf(dnf):
             literals.append(f"~{str(disjunct.args[0])}")  # Include the negation symbol (~)
         else:
             for literal in disjunct.args:
-                literals.append(str(literal.as_independent(*disjunct.free_symbols)[1]))
-    return literals
+                # Access the literal directly without using 'as_independent'
+                literals.append(str(literal))
+    return list(set(literals))
     
 #def get_literals_from_dnf(dnf):
 #    literals = []
@@ -129,5 +164,5 @@ def get_literals_from_dnf(dnf):
 #    return literals
 #    
     
-test_query = 'bind or number and value'
+test_query = 'paper or number and value'
 get_similar_docs(test_query)
