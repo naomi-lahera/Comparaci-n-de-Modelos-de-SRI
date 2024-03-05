@@ -85,10 +85,12 @@ class MetricsCalculator:
 
         
 def main():
-    #cranfield_data = CranfieldData()
+    cranfield_data = CranfieldData()
     
     docs = getDocs('bind or number and value')
-    print(docs)
+    
+    for i, (doc, val) in enumerate(docs.items()):
+        print(f'{doc} , {val}')
     # Acceso a las variables públicas de la clase
     # print("Query pairs:")
     # for query_id, query_text in cranfield_data.query_pairs:
