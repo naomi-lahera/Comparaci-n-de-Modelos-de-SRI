@@ -9,11 +9,15 @@ import cargar
 
 class corpus:
     def __init__(self, data_name, docs_num):
-        loaded_data = load('data_cranfield.joblib')
+        loaded_data = ''
         if data_name == "":
+            data_name = 'cranfield'
+            loaded_data = load(f'data_{data_name}.joblib')
             data_name = loaded_data['data_name']
+            
         else:
             cargar.cargar(data_name,docs_num)
+            loaded_data = load(f'data_{data_name}.joblib')
 
         # Cargar los datos desde el archivo
 

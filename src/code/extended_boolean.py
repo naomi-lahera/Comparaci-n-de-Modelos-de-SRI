@@ -22,11 +22,13 @@ def get_tfidf_value(document_text, word):
     global feature_names
     
     #tfidf_matrix = vectorizer.transform([document_text]).todense()
-    tfidf_matrix = matrix[document_text].todense()
     
+    #tfidf_matrix = matrix[document_text].todense()
+    
+    #print(tfidf_matrix)
     #feature_index = tfidf_matrix[0,:].nonzero()[1]
     try:
-        result = tfidf_matrix[0, word] 
+        result = matrix[document_text,word] 
         return result
     except:
         return 0
@@ -46,7 +48,11 @@ def sim(query_list, query_dnf):
                 # Obtener el termino
                 term = clause.as_independent(*clause.free_symbols)[1]
                 # Obtener el indice del termino en la matriz
-                term_index = feature_names[str(term)]
+                try:
+                    term_index = feature_names[str(term)]
+                except:
+                    continue
+                 
                 
                 # Ver el valor de la matriz en la posicion doc, term
                 #tfxidf_term = extended_matrix[doc.index, term_index]
@@ -76,12 +82,13 @@ def sim(query_list, query_dnf):
         
         scores.update({doc_index: math.pow(_or / _or_count, literals_total)})
 
-    scores = dict(sorted(scores.items(), key=lambda item: item[1]))
-    for i,doc in enumerate(scores):
-        if i == 5:
-            break
-        print(doc)
+    scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
+
+    
+    for i, (doc, val) in enumerate(scores.items()):
+        print(f'{doc} , {val}')
     return scores
+
                     
 def init():
     global first
@@ -152,5 +159,5 @@ def get_literals_from_dnf(dnf):
 #    return literals
 #    
     
-test_query = 'bind or number and value'
+test_query = 'paper or number and value'
 get_similar_docs(test_query)
