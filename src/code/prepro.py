@@ -16,7 +16,7 @@ def remove_noise_spacy(tokenized_docs):
 def remove_stopwords_spacy(tokenized_docs, query):
   stopwords = spacy.lang.en.stop_words.STOP_WORDS
   return [
-      [token for token in doc if token.text not in stopwords or (query and not token.text in ['and', 'or', 'not'])] for doc in tokenized_docs
+      [token for token in doc if token.text not in stopwords or (token.text in ['and', 'or', 'not'])] for doc in tokenized_docs
   ]
 
 #Reducción Morfológica
