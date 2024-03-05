@@ -35,5 +35,5 @@ def cargar(data,docs_num):
 
     dump(data_to_save, f'data_{data}.joblib')
     # Crea un jblin con los valores de tfxidf con la coleccion de documentos y se puede modificar la cantidad de documentos a escoger 
-    save_info_to_Joblib(docs, docs_num, data_name)
+    save_info_to_Joblib(docs, data_name)
     # Guardar los datos en un archivo

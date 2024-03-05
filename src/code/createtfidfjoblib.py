@@ -5,7 +5,7 @@ import prepro
 from sklearn.feature_extraction.text import TfidfVectorizer
 import joblib
 
-def save_info_to_Joblib(docs, docs_num, corpus_name):
+def save_info_to_Joblib(docs, corpus_name):
     # documents = docs[:docs_num]
     documents = list(docs)
 
