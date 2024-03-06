@@ -1,11 +1,11 @@
 from query_preppro import query_to_dnf
 import joblib
-from corpus import corpus
+from corpus import Corpus
 from extended import boolean_extended
 from boolean import boolean
 from sympy import Not
 first = True
-_corpus = corpus("")
+_corpus = Corpus("")
 matrix = ''
 vectorizer = ''
 feature_names = dict()
