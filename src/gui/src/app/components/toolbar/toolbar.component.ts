@@ -16,7 +16,7 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './toolbar.component.css'
 })
 export class ToolbarComponent {
-  sidebarVisible: boolean = true
+  sidebarVisible: boolean = false;
   items: MenuItem[] | undefined;
 
   ngOnInit() {
