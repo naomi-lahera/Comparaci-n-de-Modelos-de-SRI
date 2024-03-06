@@ -62,9 +62,7 @@ def get_similar_docs(query_id,method):
     """
     query =_corpus.queries[int(query_id)][1]
     query_dnf = query_to_dnf(query)
-
     query_literals = get_literals_from_dnf(query_dnf)
-
     init()
     if method == "boolean":
         scores = boolean(query_dnf,_corpus.preprocessed_docs)
@@ -92,8 +90,11 @@ def get_literals_from_dnf(dnf):
         if isinstance(disjunct, Not):
             literals.append(f"~{str(disjunct.args[0])}")  # Include the negation symbol (~)
         else:
-            for literal in disjunct.args:
-                # Access the literal directly without using 'as_independent'
-                literals.append(str(literal))
+            if disjunct.is_Atom:
+                literals.append(str(disjunct))
+            else:
+                for literal in disjunct.args:
+                    # Access the literal directly without using 'as_independent'
+                    literals.append(str(literal))
     return list(set(literals))
     

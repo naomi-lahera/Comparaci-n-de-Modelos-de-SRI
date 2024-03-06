@@ -68,22 +68,23 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
                 except:
                     continue
                 tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
-                _or += math.pow(tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - math.pow(tfxidf_term, literals_total)
+                _or += math.pow(tfxidf_term, literals_total)
             else:
                 _and = 0
                 _and_count = 0
                 for literal in clause.args:  
                     _and_count += 1
-                    if(not isinstance(clause,sympy.logic.boolalg.Not)) : 
+                    if(not isinstance(clause,sympy.logic.boolalg.Not)): 
                         term = literal.as_independent(*literal.free_symbols)[1]
                     try:
                         term_index = feature_names[str(term)]
                     except:
                         continue
                     tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
-                    _and += math.pow(1 - tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - (1 - math.pow(tfxidf_term, literals_total))
+                    _and += math.pow(1 - tfxidf_term, literals_total) 
+                #print(f'math.pow {_or} / {_or_count}, 1/{literals_total}')
                 _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
-        value = 0 if math.pow(_or / _or_count, literals_total) < 0.0001 else math.pow(_or / _or_count, literals_total)
+        value = math.pow(_or / _or_count, literals_total)
         scores.update({doc_index: value})
     scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
     for i, (doc, val) in enumerate(scores.items()):

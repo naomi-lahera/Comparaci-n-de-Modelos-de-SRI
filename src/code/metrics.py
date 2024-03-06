@@ -199,7 +199,6 @@ def main(model):
         for query_id, query_text in cranfield_data.query_pairs:
             if query_id == '160':
                 break
-            print(f'{query_id}')
             # Obtén los documentos recuperados para esta consulta
             try:
                 retrieved_dict_keys = getDocs(query_id,model).keys()
@@ -228,5 +227,5 @@ def main(model):
             writer.writerow([query_id, precision, recall, f_measure, f1_measure, r_precision])
 
 if __name__ == "__main__":
-    #main("boolean")
-    main("extended")
+    main("boolean")
+    #main("extended")
