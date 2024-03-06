@@ -23,7 +23,6 @@ def query_to_dnf(query):
     override_and = ('and', 'AND', '&&', '&')
     override_or = ('or', 'OR', '||', '|')
     override_not = ('not', 'NOT', '~')
-    override_notp = ('(NOT', '(not', '~')
 
     processed_query = [token for token in processed_query.split(' ') if token.isalnum()]
 
@@ -38,9 +37,6 @@ def query_to_dnf(query):
         elif item in override_not:
             processed_query[i] = override_not[-1]
             newFND += "~"
-        elif item in override_notp:
-            processed_query[i] = override_notp[-1]
-            newFND += "(~"
         
         else:
             newFND += processed_query[i]

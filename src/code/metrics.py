@@ -1,6 +1,6 @@
 from ast import mod
 from testing_models import get_similar_docs as getDocs
-from corpus import corpus
+from corpus import Corpus
 import csv
 
 class CranfieldData:
@@ -20,7 +20,7 @@ class CranfieldData:
     - get_query_ids(self): Devuelve un conjunto con los IDs de las consultas.
     """
     def __init__(self):
-        _corpus = corpus("")
+        _corpus = Corpus("")
         self.corpus = _corpus
         self.docs = self.corpus.docs
         #self.dataset = ir_datasets.load('cranfield')
@@ -202,9 +202,9 @@ def main(model):
             print(f'{query_id}')
             # Obtén los documentos recuperados para esta consulta
             try:
-                retrieved_dict_keys = getDocs(query_text,model).keys()
+                retrieved_dict_keys = getDocs(query_id,model).keys()
             except:
-                retrieved_dict_keys = getDocs(query_text,model)
+                retrieved_dict_keys = getDocs(query_id,model)
             
             retrieved_documents = set(int(key) for key in retrieved_dict_keys)
             
@@ -229,5 +229,4 @@ def main(model):
 
 if __name__ == "__main__":
     #main("boolean")
-    #main("extended")
-    pass
+    main("extended")

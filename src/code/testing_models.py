@@ -1,4 +1,3 @@
-from regex import U
 from query_preppro import query_to_dnf
 import joblib
 from corpus import Corpus
@@ -61,7 +60,7 @@ def get_similar_docs(query_id,method):
     - La función utiliza el método `query_to_dnf` para convertir la consulta en su forma Disjunctive Normal Form (DNF).
     - Dependiendo del método especificado, utiliza el modelo booleano o una versión extendida del modelo booleano para calcular las puntuaciones.
     """
-    query =_corpus.queries[query_id][1]
+    query =_corpus.queries[int(query_id)][1]
     query_dnf = query_to_dnf(query)
 
     query_literals = get_literals_from_dnf(query_dnf)
@@ -70,6 +69,7 @@ def get_similar_docs(query_id,method):
     if method == "boolean":
         scores = boolean(query_dnf,_corpus.preprocessed_docs)
     else:
+        query_id = _corpus.docs_iter
         scores = boolean_extended(query_id,query_literals, query_dnf,_corpus,matrix,feature_names,feedback)
     return scores
 

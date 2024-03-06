@@ -20,6 +20,8 @@ def get_tfidf_value(document_text, word, matrix):
     except:
         return 0
 
+
+
 def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_names,feedback):
     """
     Calcula y devuelve una puntuación para cada documento en el corpus basada en una consulta dada, 
@@ -50,13 +52,16 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
     literals_total = len(query_list)
     scores = dict()
     for doc_index, doc in enumerate(_corpus.docs):
-        if doc_index in feedback[query_id]:
-            continue 
+        try:
+            if doc_index in feedback[query_id]:
+                continue 
+        except:
+            pass
         _or = 0
         _or_count = 0
         for clause in query_dnf.args:
             _or_count += 1
-            if not isinstance(clause, sympy.logic.boolalg.And):
+            if not isinstance(clause, sympy.logic.boolalg.And) and not isinstance(clause,sympy.logic.boolalg.Not):
                 term = clause.as_independent(*clause.free_symbols)[1]
                 try:
                     term_index = feature_names[str(term)]
@@ -68,8 +73,9 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
                 _and = 0
                 _and_count = 0
                 for literal in clause.args:  
-                    _and_count += 1  
-                    term = literal.as_independent(*literal.free_symbols)[1]
+                    _and_count += 1
+                    if(not isinstance(clause,sympy.logic.boolalg.Not)) : 
+                        term = literal.as_independent(*literal.free_symbols)[1]
                     try:
                         term_index = feature_names[str(term)]
                     except:
@@ -79,5 +85,12 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
                 _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
         value = 0 if math.pow(_or / _or_count, literals_total) < 0.0001 else math.pow(_or / _or_count, literals_total)
         scores.update({doc_index: value})
-    scores = {k: v for k, v in scores.items() if v > 0.}
+    scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
+    for i, (doc, val) in enumerate(scores.items()):
+        print(f'{doc} , {val}')
+    
+    # scores = {k: v for k, v in scores.items() if v > 0.}
     return scores
+
+
+
