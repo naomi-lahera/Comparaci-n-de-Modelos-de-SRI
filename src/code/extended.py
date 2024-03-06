@@ -2,20 +2,14 @@ import math
 import sympy
 import math
 
-def get_tfidf_value(document_text, word):
-    global matrix
-    global vectorizer 
-    global feature_names
-    
+def get_tfidf_value(document_text, word,matrix):
     try:
         result = matrix[document_text,word] 
         return result
     except:
         return 0
                
-def boolean_extended(query_list, query_dnf,_corpus):
-    global matrix
-    global feature_names
+def boolean_extended(query_list, query_dnf,_corpus,matrix,feature_names):
     literals_total = len(query_list)
      
     scores = dict()
@@ -35,7 +29,7 @@ def boolean_extended(query_list, query_dnf,_corpus):
                  
                 
                 # Ver el valor de la matriz en la posicion doc, term
-                tfxidf_term = get_tfidf_value(doc_index,term_index)
+                tfxidf_term = get_tfidf_value(doc_index,term_index,matrix)
                 # Annadir el valor de ese termino en dependencia de si es un not o no
                 _or += math.pow(tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - math.pow(tfxidf_term, literals_total)
             else:

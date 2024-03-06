@@ -36,7 +36,7 @@ def get_similar_docs(query,method):
     if method == "boolean":
         scores = boolean(query_dnf,_corpus.preprocessed_docs)
     else:
-        scores = boolean_extended(query_literals, query_dnf,_corpus)
+        scores = boolean_extended(query_literals, query_dnf,_corpus,matrix,feature_names)
     return scores
 
 def get_literals_from_dnf(dnf):
