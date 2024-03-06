@@ -2,7 +2,6 @@ import csv
 
 def obtain_column(column_name):
     
-    csv1, csv2 = 'Metricas_boolean.csv', 'Metricas_extended.csv'
     """
     Reads two CSV files and extracts values from a specific column for each file.
 
@@ -13,6 +12,7 @@ def obtain_column(column_name):
     list: A list of tuples containing the query ID and the column value for each CSV file.
         Each tuple is structured as ((id, column), (id, column)).
     """
+    csv1, csv2 = 'Metricas_boolean.csv', 'Metricas_extended.csv'
     columns = {}
 
     # Validate that the column name is valid

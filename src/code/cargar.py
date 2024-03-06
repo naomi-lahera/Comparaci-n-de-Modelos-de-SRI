@@ -36,8 +36,9 @@ def cargar(data):
     dataset = ir_datasets.load(data_name)
     # Obtener los documentos
     docs_iter = dataset.docs_iter()
+    docs_iter = [(int(doc.doc_id) ,doc.title ,doc.text) for doc in docs_iter]
     # Obtener cada texto por cada documentos
-    docs = [doc.text for doc in docs_iter]
+    docs = [doc[2] for doc in docs_iter]
     # Procesar los documentos
     preprocessed_docs = prepro.preprocess_documents(docs,False)
     # Convertir cada lista de tokens en una cadena única
@@ -54,7 +55,8 @@ def cargar(data):
         'queries': list(queries),
         'qrels': list(qrels),
         'docs' : docs,
-        'data_name' : data_name
+        'data_name' : data_name,
+        'docs_iter' : docs_iter
     }
 
     dump(data_to_save, f'data_{data}.joblib')
