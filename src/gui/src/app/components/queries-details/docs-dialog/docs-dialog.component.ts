@@ -26,31 +26,73 @@ export class DocsDialogComponent {
 
   docs: Doc[] = [
     {
+      id: 'tcfvyhjm',
       title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     },
     {
-      title: 'Documnent title',
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
+      text: 'Document text'
+    },
+    {
+      id: 'tcfvyhjm',
+      title: 'Documnent title sxtdcrfgyioijo´pl´poiuytrteedf67i oijlktdu6fyknkuljjni yuecdvi77iuolklictxrezatsxeyrt7yu9i0opoui 097reder5g679p8jpiomkjhg56879ouijk',
       text: 'Document text'
     }
   ]
