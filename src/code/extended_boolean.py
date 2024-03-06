@@ -78,8 +78,8 @@ def sim(query_list, query_dnf):
     scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
 
     
-    for i, (doc, val) in enumerate(scores.items()):
-        print(f'{doc} , {val}')
+    # for i, (doc, val) in enumerate(scores.items()):
+    #     print(f'{doc} , {val}')
     return scores
 
                     
@@ -136,5 +136,5 @@ def get_literals_from_dnf(dnf):
 #    return literals
 #    
     
-test_query = 'What or similarity laws '
-get_similar_docs(test_query)
+# test_query = 'What or similarity laws '
+# get_similar_docs(test_query)
