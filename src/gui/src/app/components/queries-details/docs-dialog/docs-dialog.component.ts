@@ -111,13 +111,16 @@ export class DocsDialogComponent implements OnInit {
     console.log('doc');
   }
 
-  confirm1(event: Event, doc: Doc) {
+  async confirm1(event: Event, doc: Doc) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Quiere eliminar la relacion de este documento con esta query?',
         icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            console.log('error')        
+        accept: async () => {
+            await this.qService.deleteDoc(this.query.id, doc.id)
+            this.ngOnInit()
+            // this.docs = await this.qService.getDocs(this.query.id)  
+            console.log('update done')      
           }
     });
   }

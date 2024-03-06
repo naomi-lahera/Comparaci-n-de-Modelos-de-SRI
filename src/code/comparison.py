@@ -1,18 +1,18 @@
 import csv
 
-def obtain_column(csv1, csv2, column_name):
+def obtain_column(column_name):
+    
     """
     Reads two CSV files and extracts values from a specific column for each file.
 
     Args:
-    csv1 (str): Path to the first CSV file.
-    csv2 (str): Path to the second CSV file.
     column_name (str): Name of the column from which values will be extracted.
 
     Returns:
     list: A list of tuples containing the query ID and the column value for each CSV file.
         Each tuple is structured as ((id, column), (id, column)).
     """
+    csv1, csv2 = 'Metricas_boolean.csv', 'Metricas_extended.csv'
     columns = {}
 
     # Validate that the column name is valid
@@ -39,5 +39,5 @@ def obtain_column(csv1, csv2, column_name):
 
     return columns.values()
 
-result = obtain_column('Metricas_boolean.csv', 'Metricas_extended.csv', 'Recall')
+result = obtain_column('Precision')
 print(result)

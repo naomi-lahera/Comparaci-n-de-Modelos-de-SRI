@@ -9,10 +9,18 @@ CORS(app)
 @app.route('/api/search', methods=['GET'])
 def get_docs():
     query_id = request.args.get('query_id')
-    # docs_dict = [int(key) for key, value in get_similar_docs(int(query_id), 'extended').items()]
-    
+    docs_dict = get_similar_docs(int(query_id), 'extended')
+    # print(docs_dict)
     if query_id:
-        return jsonify(_corpus.docs)
+        return jsonify(
+            [
+                {
+                    'id': _corpus.docs_iter[doc_id][0],
+                    'title': _corpus.docs_iter[doc_id][1],
+                    'text': _corpus.docs_iter[doc_id][2]
+                }
+                for doc_id, score in docs_dict.items()
+            ])
         
     return jsonify({'error': 'Missing query parameter'}), 400
 
@@ -25,6 +33,7 @@ def delete_doc_query():
     query_id = request.get('query_id')
     doc_id = request.get('doc_id')
     update_feedback(int(query_id), doc_id)
+    print('update feedback')
     return jsonify({'msg': 'Done'})
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from ast import mod
 from testing_models import get_similar_docs as getDocs
-from corpus import corpus
+from corpus import Corpus
 import csv
 
 class CranfieldData:
@@ -20,7 +20,7 @@ class CranfieldData:
     - get_query_ids(self): Devuelve un conjunto con los IDs de las consultas.
     """
     def __init__(self):
-        _corpus = corpus("")
+        _corpus = Corpus("")
         self.corpus = _corpus
         self.docs = self.corpus.docs
         #self.dataset = ir_datasets.load('cranfield')
@@ -229,4 +229,5 @@ def main(model):
 
 if __name__ == "__main__":
     #main("boolean")
-    main("extended")
+    #main("extended")
+    pass

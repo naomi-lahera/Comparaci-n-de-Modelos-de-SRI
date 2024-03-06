@@ -46,6 +46,7 @@ class Corpus:
         
         # Obtener resultados de cada query
         self.qrels = loaded_data['qrels']
+        self.docs_iter = loaded_data['docs_iter']
 
     def print_qrels(self):
         """
