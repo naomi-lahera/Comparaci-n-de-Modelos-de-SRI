@@ -9,13 +9,17 @@ def tokenization_spacy(texts):
 
 #Eliminamos el ruido
 def remove_noise_spacy(tokenized_docs):
-  return [[token for token in doc if token.is_alpha] for doc in tokenized_docs]
+  return [[token for token in doc if token.is_alpha or token.text in ['&','|','~','&&','||']] for doc in tokenized_docs]
 
 #Eliminamos las stop_words
 def remove_stopwords_spacy(tokenized_docs, query):
   stopwords = spacy.lang.en.stop_words.STOP_WORDS
-  return [
+  if query:
+    return [
       [token for token in doc if token.text not in stopwords or (token.text in ['and', 'or', 'not'])] for doc in tokenized_docs
+  ] 
+  return [
+      [token for token in doc if token.text not in stopwords] for doc in tokenized_docs
   ]
 
 #Reducción Morfológica
@@ -28,6 +32,8 @@ def morphological_reduction_spacy(tokenized_docs, use_lemmatization=True):
 
 def preprocess_documents(documents, is_query):  
     # Tokenización
+    if is_query:
+      documents = [documents]
     tokenized_docs = tokenization_spacy(documents)
 
     # Eliminación de ruido (solo tokens alfabéticos)
@@ -35,8 +41,13 @@ def preprocess_documents(documents, is_query):
     
     #Eliminamos las stop_words
     tokenized_docs = remove_stopwords_spacy(tokenized_docs, is_query)
+    if is_query:
+      lista = [token.text for token in tokenized_docs[0]]
+      strin = " ".join(lista)
+      print(strin)
+      return strin
     
     #Reducción Morfológica
     tokenized_docs = morphological_reduction_spacy(tokenized_docs)
-
+    
     return tokenized_docs

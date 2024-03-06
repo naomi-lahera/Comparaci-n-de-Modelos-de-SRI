@@ -47,14 +47,19 @@ def boolean_extended(query_list, query_dnf,_corpus,matrix,feature_names):
 
                     # Ver el valor de la matriz en la posicion doc, term
                     #tfxidf_term = extended_matrix[doc.index, term_index]
-                    tfxidf_term = get_tfidf_value(doc_index,term_index)
+                    tfxidf_term = get_tfidf_value(doc_index,term_index,matrix)
                     
                     _and += math.pow(1 - tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - (1 - math.pow(tfxidf_term, literals_total))
                
                 # Calculo la raiz p-esima 
                 _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
         
-        scores.update({doc_index: math.pow(_or / _or_count, literals_total)})
-
-    scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
+        value = 0 if math.pow(_or / _or_count, literals_total) < 0.0001 else math.pow(_or / _or_count, literals_total)
+        #print(f'{doc_index}: {value}')
+        scores.update({doc_index: value})
+    
+    
+    scores = {k: v for k, v in scores.items() if v > 0.}
+    #scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0.1])
+    print('------', len(scores))
     return scores

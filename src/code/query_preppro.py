@@ -1,9 +1,9 @@
 from sympy import sympify, to_dnf,symbols,And
 from expasion import expand_query_with_wordnet
-
+from prepro import preprocess_documents
 def query_to_dnf(query):
     
-    processed_query = query
+    processed_query = preprocess_documents(query,True)
     override_and = ('and','AND','&&','&')
     override_or = ('or','OR','||', '|')
     override_not = ('not','NOT','~')
