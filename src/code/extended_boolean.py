@@ -8,25 +8,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import time
 
 first = True
-start_time = time.time()
 _corpus = corpus("", 10)
-elapsed_time = time.time() - start_time
-print(f"Tiempo de ejecución de corpus: {elapsed_time} segundos")
 matrix = ''
 vectorizer = ''
 feature_names = dict()
-#extended_matrix = ''
 def get_tfidf_value(document_text, word):
     global matrix
     global vectorizer 
     global feature_names
     
-    #tfidf_matrix = vectorizer.transform([document_text]).todense()
-    
-    #tfidf_matrix = matrix[document_text].todense()
-    
-    #print(tfidf_matrix)
-    #feature_index = tfidf_matrix[0,:].nonzero()[1]
     try:
         result = matrix[document_text,word] 
         return result
@@ -69,7 +59,10 @@ def sim(query_list, query_dnf):
                     # Obtener el termino
                     term = literal.as_independent(*literal.free_symbols)[1]
                     # Obtener el indice del termino en la matriz
-                    term_index = feature_names[str(term)]
+                    try:
+                        term_index = feature_names[str(term)]
+                    except:
+                        continue
 
                     # Ver el valor de la matriz en la posicion doc, term
                     #tfxidf_term = extended_matrix[doc.index, term_index]
@@ -94,7 +87,6 @@ def init():
     global first
     global matrix
     global feature_names
-    #global extended_matrix
     global vectorizer
     
     if first:
@@ -105,34 +97,19 @@ def init():
         feature_names = vectorizer.get_feature_names_out()
         feature_names = {word: index for index, word in enumerate(feature_names)}
 
-        #extended_matrix = matrix.fit_transform(_corpus.preprocess_docs)
         first = False
         
     
 
 def get_similar_docs(query):
-    start_time = time.time()
     query_dnf = query_to_dnf(query)
-    print(query_dnf)
-    elapsed_time = time.time() - start_time
-    print(f"Tiempo de ejecución de query_to_dnf: {elapsed_time} segundos")
 
-    start_time = time.time()
     query_literals = get_literals_from_dnf(query_dnf)
-    print(query_literals)
-    elapsed_time = time.time() - start_time
-    print(f"Tiempo de ejecución de get_literals_from_dnf: {elapsed_time} segundos")
 
-    start_time = time.time()
     init()
-    elapsed_time = time.time() - start_time
-    print(f"Tiempo de ejecución de init: {elapsed_time} segundos")
 
-    start_time = time.time()
-    sim(query_literals, query_dnf)
-    elapsed_time = time.time() - start_time
-    print(f"Tiempo de ejecución de sim: {elapsed_time} segundos")
-
+    scores = sim(query_literals, query_dnf)
+    return scores
 
 def get_literals_from_dnf(dnf):
     literals = []
@@ -159,5 +136,5 @@ def get_literals_from_dnf(dnf):
 #    return literals
 #    
     
-test_query = 'paper or number and value'
+test_query = 'What or similarity laws '
 get_similar_docs(test_query)
