@@ -4,16 +4,16 @@ import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-data',
   standalone: true,
   imports: [
     PrimeNgModule,
     RouterModule
   ],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.css'
+  templateUrl: './data.component.html',
+  styleUrl: './data.component.css'
 })
-export class SearchComponent implements OnInit {
+export class DataComponent implements OnInit {
   precision: any;
   recobrado: any;
   medidaF: any;
