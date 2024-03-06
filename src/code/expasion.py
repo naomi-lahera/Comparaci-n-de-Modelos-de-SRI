@@ -11,6 +11,8 @@ from nltk.corpus import wordnet as wn
 def expand_query_with_wordnet(query):
                 
     words = query.split()
+    if len(words) > 10:
+        return query
     synonyms = {}
     for word in words:
         try:

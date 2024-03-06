@@ -1,10 +1,9 @@
-import ir_datasets
-from extended_boolean import get_similar_docs as getDocs
-from process import corpus
+from testing_models import get_similar_docs as getDocs
+from corpus import corpus
 
 class CranfieldData:
     def __init__(self):
-        _corpus = corpus("",100)
+        _corpus = corpus("")
         self.corpus = _corpus
         self.docs = self.corpus.docs
         #self.dataset = ir_datasets.load('cranfield')
@@ -128,7 +127,7 @@ def main():
     
     for query_id, query_text in cranfield_data.query_pairs:
         # Obtén los documentos recuperados para esta consulta
-        retrieved_documents = getDocs(query_text).keys()
+        retrieved_documents = getDocs(query_text,'extended').keys()
         print("PRDoc: ", retrieved_documents)
         # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
         relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
