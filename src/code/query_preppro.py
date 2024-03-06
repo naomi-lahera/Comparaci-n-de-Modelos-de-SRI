@@ -37,7 +37,7 @@ def query_to_dnf(query):
     newFND = expand_query_with_wordnet(newFND)
     # Convertir a expresión sympy y aplicar to_dnf
     query_expr = sympify(newFND, evaluate=False)
-    query_dnf = to_dnf(query_expr, simplify=True)
+    query_dnf = to_dnf(query_expr, simplify=True, force=True)
     
     return query_dnf
 #def query_to_dnf(query):

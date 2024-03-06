@@ -1,6 +1,7 @@
 import ir_datasets
 from extended_boolean import get_similar_docs as getDocs
 from process import corpus
+import csv
 
 class CranfieldData:
     def __init__(self):
@@ -126,24 +127,33 @@ class MetricsCalculator:
 def main():
     cranfield_data = CranfieldData()
     
-    for query_id, query_text in cranfield_data.query_pairs:
-        # Obtén los documentos recuperados para esta consulta
-        retrieved_documents = getDocs(query_text).keys()
-        print("PRDoc: ", retrieved_documents)
-        
-        # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
-        relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
+    # Abre un archivo CSV en modo escritura
+    with open('MetricasExtended.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
 
-        # Creamos una instancia de MetricsCalculator con los conjuntos relevantes, irrelevantes y recuperados
-        metrics_calculator = MetricsCalculator(relevant_documents, irrelevant_documents, retrieved_documents)
-        
-        # Calculamos y mostramos algunas métricas para la consulta actual
-        print(f"Query ID: {query_id}")
-        print("Precision:", metrics_calculator.precision())
-        print("Recall:", metrics_calculator.recall())
-        print("F-measure:", metrics_calculator.f_measure())
-        print("F1-measure:", metrics_calculator.f1_measure())
-        print("R-Precision:", metrics_calculator.r_precision())
+        # Escribe el encabezado del archivo CSV
+        writer.writerow(['Query ID', 'Precision', 'Recall', 'F-measure', 'F1-measure', 'R-Precision'])
+
+        # Itera sobre cada par de consulta y texto de consulta
+        for query_id, query_text in cranfield_data.query_pairs:
+            # Obtén los documentos recuperados para esta consulta
+            retrieved_documents = getDocs(query_text).keys()
+            
+            # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
+            relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
+
+            # Creamos una instancia de MetricsCalculator con los conjuntos relevantes, irrelevantes y recuperados
+            metrics_calculator = MetricsCalculator(relevant_documents, irrelevant_documents, retrieved_documents)
+            
+            # Calcula las métricas para la consulta actual
+            precision = metrics_calculator.precision()
+            recall = metrics_calculator.recall()
+            f_measure = metrics_calculator.f_measure()
+            f1_measure = metrics_calculator.f1_measure()
+            r_precision = metrics_calculator.r_precision()
+
+            # Escribe las métricas en el archivo CSV
+            writer.writerow([query_id, precision, recall, f_measure, f1_measure, r_precision])
 
 if __name__ == "__main__":
     main()
