@@ -136,5 +136,5 @@ def get_literals_from_dnf(dnf):
 #    return literals
 #    
     
-test_query = 'What or similarity laws '
-get_similar_docs(test_query)
+# test_query = 'What or similarity laws '
+# get_similar_docs(test_query)

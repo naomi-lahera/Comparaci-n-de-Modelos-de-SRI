@@ -84,10 +84,10 @@ class MetricsCalculator:
         self.NR = relevant - retrieved
         self.NI= irrelevant - retrieved
 
-        print("RR: ", self.RR)
-        print("RI: ", self.RI)
-        print("NR: ", self.NR)
-        print("NI: ", self.NI)
+        # print("RR: ", self.RR)
+        # print("RI: ", self.RI)
+        # print("NR: ", self.NR)
+        # print("NI: ", self.NI)
         
     def precision(self):
         """Calculates the fraction of retrieved information that is relevant."""
@@ -128,7 +128,8 @@ def main():
     
     for query_id, query_text in cranfield_data.query_pairs:
         # Obtén los documentos recuperados para esta consulta
-        retrieved_documents = getDocs(query_text.rstrip(" .")).keys()
+        retrieved_documents = getDocs(query_text).keys()
+        print("PRDoc: ", retrieved_documents)
         # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
         relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
 
