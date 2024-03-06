@@ -1,15 +1,26 @@
 import nltk
-
-#Descargar WordNet
-#nltk.download('omw-1.4')
-#nltk.download('wordnet')
-
-nltk.data.path.clear()
-nltk.data.path.append('./')
 from nltk.corpus import wordnet as wn
 
 def expand_query_with_wordnet(query):
-                
+    """
+    Expande una consulta utilizando sinónimos encontrados en WordNet, una base de datos léxica de 
+    inglés que contiene relaciones semánticas entre palabras. Si la consulta tiene 5 o más palabras, 
+    se retorna la consulta original sin cambios. De lo contrario, se buscan sinónimos para cada palabra 
+    en la consulta y se expande la consulta incluyendo estos sinónimos.
+
+    Parámetros:
+    - query (str): La consulta a expandir.
+
+    Retorna:
+    - str: La consulta original o una versión expandida con sinónimos encontrados en WordNet.
+
+    Notas:
+    - La función utiliza la biblioteca NLTK y su corpus WordNet para buscar sinónimos.
+    - Si no se encuentran sinónimos para una palabra, la palabra original se incluye en la consulta 
+      expandida.
+    - La consulta expandida incluye una disyunción (OR) entre la palabra original y sus sinónimos, 
+      excepto la palabra original que se excluye de la disyunción.
+    """
     words = query.split()
     if len(words) >= 5:
         return query
@@ -38,4 +49,3 @@ def expand_query_with_wordnet(query):
     
     expanded_query = " ".join(expanded_query_parts)
     return expanded_query
-

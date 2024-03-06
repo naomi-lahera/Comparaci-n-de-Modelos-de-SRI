@@ -1,4 +1,25 @@
 def boolean(query_dnf, tokenized_docs):
+    """
+    Filtra y devuelve los índices de los documentos que coinciden con la consulta dada, 
+    basándose en la representación en Disjunctive Normal Form (DNF) de la consulta.
+
+    Esta función compara la consulta (representada en DNF) con un conjunto de documentos 
+    tokenizados, para determinar qué documentos contienen todos los términos de la consulta.
+
+    Parámetros:
+    - query_dnf (sympy.And): La consulta en Disjunctive Normal Form (DNF). Cada componente 
+      de la consulta debe ser una conjunción de términos.
+    - tokenized_docs (list): Una lista de conjuntos de términos, donde cada conjunto 
+      representa los términos de un documento tokenizado.
+
+    Retorna:
+    - list: Una lista de índices de documentos que coinciden con la consulta.
+
+    Nota:
+    - La función asume que cada componente de la consulta DNF es una conjunción de términos.
+    - Los documentos se consideran coincidentes si contienen todos los términos de al menos un 
+      componente de la consulta.
+    """
     # Convert tokenized_docs to a list of sets for efficient operations
     doc_term_sets = tokenized_docs
 

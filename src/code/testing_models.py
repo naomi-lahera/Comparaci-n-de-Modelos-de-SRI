@@ -12,6 +12,15 @@ feature_names = dict()
 
      
 def init():
+    """
+    Inicializa las variables globales necesarias para el procesamiento de consultas, incluyendo la carga de la matriz de valores TF-IDF y el vectorizador.
+
+    Esta función se ejecuta solo una vez para evitar la sobrecarga de cargar los datos de la matriz y el vectorizador en cada llamada.
+
+    Notas:
+    - Carga la matriz de valores TF-IDF y el vectorizador desde archivos joblib.
+    - Genera un diccionario de nombres de características a partir de los nombres de características proporcionados por el vectorizador.
+    """
     global first
     global matrix
     global feature_names
@@ -28,6 +37,21 @@ def init():
         first = False
         
 def get_similar_docs(query,method):
+    """
+    Obtiene documentos similares a una consulta dada utilizando un método específico de recuperación de información.
+
+    Parámetros:
+    - query (str): La consulta para la cual se buscan documentos similares.
+    - method (str): El método de recuperación de información a utilizar ('boolean' o 'extended').
+
+    Retorna:
+    - dict: Un diccionario donde las claves son los índices de los documentos y los valores son las puntuaciones calculadas 
+      para cada documento basadas en la consulta.
+
+    Notas:
+    - La función utiliza el método `query_to_dnf` para convertir la consulta en su forma Disjunctive Normal Form (DNF).
+    - Dependiendo del método especificado, utiliza el modelo booleano o una versión extendida del modelo booleano para calcular las puntuaciones.
+    """
     query_dnf = query_to_dnf(query)
 
     query_literals = get_literals_from_dnf(query_dnf)
@@ -40,6 +64,19 @@ def get_similar_docs(query,method):
     return scores
 
 def get_literals_from_dnf(dnf):
+    """
+    Extrae los literales de una expresión booleana en DNF (Disjunctive Normal Form).
+
+    Parámetros:
+    - dnf (sympy.logic.boolalg.And): Una expresión booleana en DNF.
+
+    Retorna:
+    - list: Una lista de literales extraídos de la expresión DNF.
+
+    Notas:
+    - Los literales pueden ser palabras o frases de la consulta, representadas como cadenas de texto.
+    - Si un literal es una negación, se incluye el símbolo de negación (~) antes de la palabra o frase.
+    """
     literals = []
     for disjunct in dnf.args:
         if isinstance(disjunct, Not):

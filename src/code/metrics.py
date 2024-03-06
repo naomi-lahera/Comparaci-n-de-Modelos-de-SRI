@@ -4,6 +4,21 @@ from corpus import corpus
 import csv
 
 class CranfieldData:
+    """
+    Clase para manejar los datos del corpus Cranfield, incluyendo la obtención de pares de consultas y resultados de relevancia (QRELs).
+
+    Atributos:
+    - corpus (Corpus): Un objeto Corpus que contiene los documentos y sus correspondientes índices.
+    - docs (list): Lista de documentos en el corpus.
+    - query_pairs (list): Lista de pares de consultas, donde cada par contiene el ID de la consulta y el texto de la consulta.
+    - qrels (list): Lista de resultados de relevancia (QRELs) para las consultas.
+
+    Métodos:
+    - __init__(self): Inicializa la clase cargando los datos necesarios.
+    - _get_query_pairs(self): Obtiene los pares de consultas.
+    - _get_qrels(self): Obtiene los resultados de relevancia (QRELs) para las consultas.
+    - get_query_ids(self): Devuelve un conjunto con los IDs de las consultas.
+    """
     def __init__(self):
         _corpus = corpus("")
         self.corpus = _corpus
@@ -31,6 +46,12 @@ class CranfieldData:
         return set(query_id for query_id, _ in self.query_pairs)
 
 class RelevanceDocumentSetBuilder:
+    """
+    Clase para construir conjuntos de documentos relevantes e irrelevantes basados en los resultados de relevancia (QRELs).
+
+    Métodos:
+    - build_relevance_document_sets(documents, query_id, qrels): Construye los conjuntos de documentos relevantes e irrelevantes para una consulta específica.
+    """
     @staticmethod
     def build_relevance_document_sets(documents, query_id, qrels):
         relevant_documents = set()
@@ -53,6 +74,18 @@ class RelevanceDocumentSetBuilder:
         return relevant_documents, irrelevant_documents
 
 class QueryMetrics:
+    """
+    Clase para almacenar y recuperar métricas de rendimiento para consultas específicas.
+
+    Atributos:
+    - metrics (dict): Diccionario para almacenar las métricas de rendimiento para cada consulta.
+
+    Métodos:
+    - __init__(self): Inicializa la clase.
+    - add_query_metrics(self, query_id, precision, recall, f_measure, f1_measure, r_precision): Agrega las métricas para una consulta específica.
+    - get_query_metrics(self, query_id): Obtiene las métricas para una consulta específica.
+    - get_all_metrics(self): Obtiene todas las métricas para todas las consultas.
+    """
     def __init__(self):
         self.metrics = {}
 
@@ -75,7 +108,22 @@ class QueryMetrics:
         return self.metrics
 
 class MetricsCalculator:
+    """
+    Clase para calcular métricas de rendimiento como precisión, recall, F-measure, F1-measure y R-Precision para un conjunto de documentos recuperados.
 
+    Atributos:
+    - relevant (set): Conjunto de documentos relevantes.
+    - irrelevant (set): Conjunto de documentos irrelevantes.
+    - retrieved (set): Conjunto de documentos recuperados.
+
+    Métodos:
+    - __init__(self, relevant, irrelevant, retrieved): Inicializa la clase con los conjuntos de documentos relevantes, irrelevantes y recuperados.
+    - precision(self): Calcula la precisión.
+    - recall(self): Calcula el recall.
+    - f_measure(self, beta=1): Calcula la medida F.
+    - f1_measure(self): Calcula la medida F1.
+    - r_precision(self): Calcula la precisión R.
+    """
     def __init__(self, relevant, irrelevant, retrieved):
         self.relevant = relevant
         self.irrelevant = irrelevant
@@ -127,6 +175,18 @@ class MetricsCalculator:
 
 
 def main(model):
+    """
+    Función principal para cargar los datos de Cranfield, recuperar documentos para cada consulta, calcular métricas de rendimiento y escribir los resultados en un archivo CSV.
+
+    Parámetros:
+    - model (str): El modelo de recuperación de documentos a utilizar.
+
+    Notas:
+    - La función utiliza la clase CranfieldData para cargar los datos de Cranfield y obtener los pares de consultas y resultados de relevancia (QRELs).
+    - La función utiliza la clase RelevanceDocumentSetBuilder para construir conjuntos de documentos relevantes e irrelevantes para cada consulta.
+    - La función utiliza la clase MetricsCalculator para calcular métricas de rendimiento para cada consulta.
+    - La función escribe las métricas calculadas en un archivo CSV.
+    """
     cranfield_data = CranfieldData()
     # Abre un archivo CSV en modo escritura
     with open(f'Metricas_{model}.csv', mode='w', newline='') as file:

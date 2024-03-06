@@ -30,7 +30,20 @@ def morphological_reduction_spacy(tokenized_docs, use_lemmatization=True):
     for doc in tokenized_docs
   ]
 
-def preprocess_documents(documents, is_query):  
+def preprocess_documents(documents, is_query): 
+    """
+    Preprocesa los documentos, incluyendo la tokenización, eliminación de ruido, eliminación de palabras vacías y reducción morfológica.
+
+    Este proceso es fundamental para preparar el texto para el análisis de texto o la recuperación de información.
+
+    Parámetros:
+    - documents (list): Una lista de documentos a preprocesar.
+    - is_query (bool): Un booleano que indica si los documentos son consultas. Si es verdadero, se procesará como una consulta.
+
+    Retorna:
+    - str: Si los documentos son una consulta, retorna la consulta preprocesada como una cadena de texto.
+    - list: Si los documentos no son una consulta, retorna una lista de listas de tokens preprocesados.
+    """ 
     # Tokenización
     if is_query:
       documents = [documents]
