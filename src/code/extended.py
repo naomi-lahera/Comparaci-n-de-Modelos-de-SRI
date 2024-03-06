@@ -23,7 +23,7 @@ def get_tfidf_value(document_text, word, matrix):
     except:
         return 0
 
-def boolean_extended(query_list, query_dnf, _corpus, matrix, feature_names):
+def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_names,feedback):
     """
     Calcula y devuelve una puntuación para cada documento en el corpus basada en una consulta dada, 
     utilizando una representación en Disjunctive Normal Form (DNF) de la consulta y una matriz de 
@@ -53,33 +53,38 @@ def boolean_extended(query_list, query_dnf, _corpus, matrix, feature_names):
     literals_total = len(query_list)
     scores = dict()
     for doc_index, doc in enumerate(_corpus.docs):
-        _or = 0
-        _or_count = 0
-        for clause in query_dnf.args:
-            _or_count += 1
-            if not isinstance(clause, sympy.logic.boolalg.And):
-                term = clause.as_independent(*clause.free_symbols)[1]
-                try:
-                    term_index = feature_names[str(term)]
-                except:
-                    continue
-                tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
-                _or += math.pow(tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - math.pow(tfxidf_term, literals_total)
-            else:
-                _and = 0
-                _and_count = 0
-                for literal in clause.args:  
-                    _and_count += 1  
-                    term = literal.as_independent(*literal.free_symbols)[1]
+        try:
+            if doc_index in feedback[query_id]:
+                continue 
+        except:
+            _or = 0
+            _or_count = 0
+            for clause in query_dnf.args:
+                _or_count += 1
+                if not isinstance(clause, sympy.logic.boolalg.And):
+                    term = clause.as_independent(*clause.free_symbols)[1]
                     try:
                         term_index = feature_names[str(term)]
                     except:
                         continue
                     tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
-                    _and += math.pow(1 - tfxidf_term, literals_total) if not isinstance(clause, sympy.logic.boolalg.Not) else - (1 - math.pow(tfxidf_term, literals_total))
-                _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
-        value = 0 if math.pow(_or / _or_count, literals_total) < 0.0001 else math.pow(_or / _or_count, literals_total)
-        scores.update({doc_index: value})
+                    _or += math.pow(tfxidf_term, literals_total)
+                else:
+                    _and = 0
+                    _and_count = 0
+                    for literal in clause.args:  
+                        _and_count += 1  
+                        term = literal.as_independent(*literal.free_symbols)[1]
+                        try:
+                            term_index = feature_names[str(term)]
+                        except:
+                            continue
+                        tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
+                        _and += math.pow(1 - tfxidf_term, literals_total)
+                    _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
+            value = 0 if math.pow(_or / _or_count, literals_total) < 0.0001 else math.pow(_or / _or_count, literals_total)
+            scores.update({doc_index: value})
+            
     scores = {k: v for k, v in scores.items() if v > 0.}
     return scores
 

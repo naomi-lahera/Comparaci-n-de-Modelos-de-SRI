@@ -1,6 +1,5 @@
-import os
-
 from testing_models import get_similar_docs, _corpus
+from feedback import update_feedback
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -10,19 +9,10 @@ CORS(app)
 @app.route('/api/search', methods=['GET'])
 def get_docs():
     query_id = request.args.get('query_id')
-    query = _corpus.queries[int(query_id)][1]
-    docs = get_similar_docs(query, 'extended')
-    print(docs)
+    # docs_dict = [int(key) for key, value in get_similar_docs(int(query_id), 'extended').items()]
+    
     if query_id:
-        return jsonify(
-            [
-                {
-                    'id': _corpus.docs[doc.key][0], 
-                    'title': _corpus.docs[doc.key][1], 
-                    'text': _corpus.docs[doc.key][2]
-                } 
-                for doc in docs
-            ])
+        return jsonify(_corpus.docs)
         
     return jsonify({'error': 'Missing query parameter'}), 400
 
@@ -34,6 +24,7 @@ def get_sources():
 def delete_doc_query():
     query_id = request.get('query_id')
     doc_id = request.get('doc_id')
+    update_feedback(int(query_id), doc_id)
     return jsonify({'msg': 'Done'})
 
 if __name__ == '__main__':
