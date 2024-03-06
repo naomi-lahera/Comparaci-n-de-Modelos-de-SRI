@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
           datasets: [
               {
-                //   label: '',
+                  label: '',
                   data: [65, 59, 80, 81, 56, 55, 40],
                   fill: false,
                   borderColor: documentStyle.getPropertyValue('--blue-500'),

@@ -1,0 +1,23 @@
+<div class="px-4 py-0 md:px-6 lg:px-8 text-center">
+    <div class="mb-3 font-bold text-3xl">
+        <span class="text-900">One Product, </span>
+        <span class="text-blue-600">Many Solutions</span>
+    </div>
+    <div class="text-700 mb-6">Ac turpis egestas maecenas pharetra convallis posuere morbi leo urna.</div>
+    <ul class="list-none p-3 m-0">
+        <li>
+            <ul class="list-none p-0 m-0 overflow-hidden">
+                <div *ngFor="let query of queires">
+                    <div>
+                        <li (click)="showDocsDialog(query)">
+                            <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                <!-- <i class="pi pi-search mr-2"></i> -->
+                                <span class="font-medium">{{query.text}}</span>
+                            </a>
+                        </li>
+                    </div>
+                </div>
+            </ul>
+        </li>
+    </ul>
+</div>

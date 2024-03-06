@@ -1,0 +1,22 @@
+/* body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 5rem);
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 4rem;
+    height: calc(100vh - 5rem);
+}
+
+.content {
+    flex: auto;
+    padding: 1rem;
+    height: calc(100vh - 5rem);
+} */
