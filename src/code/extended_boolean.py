@@ -5,7 +5,6 @@ import joblib
 from process import corpus
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-import time
 
 first = True
 _corpus = corpus("", 10)
