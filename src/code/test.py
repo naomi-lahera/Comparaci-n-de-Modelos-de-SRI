@@ -130,6 +130,7 @@ def main():
         # Obtén los documentos recuperados para esta consulta
         retrieved_documents = getDocs(query_text).keys()
         print("PRDoc: ", retrieved_documents)
+        
         # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
         relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
 
