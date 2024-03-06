@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import prepro
 from joblib import dump
 
-def cargar(data,docs_num):
+def cargar(data):
     data_name = data
     # Cargar un conjunto de datos específico
     dataset = ir_datasets.load(data_name)
@@ -29,8 +29,6 @@ def cargar(data,docs_num):
         'qrels': list(qrels),
         'docs' : docs,
         'data_name' : data_name
-        #'dataset' : dataset,
-        #'docs_iter': docs_iter
     }
 
     dump(data_to_save, f'data_{data}.joblib')

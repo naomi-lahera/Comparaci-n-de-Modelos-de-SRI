@@ -1,10 +1,4 @@
-from query_preppro import query_to_dnf
-from process import corpus
-
-corpu = corpus('',10) 
-query = query_to_dnf('paper or number and value')
-
-def similarity(query_dnf, tokenized_docs):
+def boolean(query_dnf, tokenized_docs):
     # Convert tokenized_docs to a list of sets for efficient operations
     doc_term_sets = tokenized_docs
 
@@ -31,6 +25,3 @@ def similarity(query_dnf, tokenized_docs):
         # If the document matches all components of the query, add it to the list
 
     return matching_documents
-
-
-print(len(similarity(query,corpu.preprocessed_docs)))

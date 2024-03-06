@@ -1,6 +1,4 @@
 from sympy import sympify, to_dnf,symbols,And
-from prepro import preprocess_documents
-import prepro
 from expasion import expand_query_with_wordnet
 
 def query_to_dnf(query):
@@ -44,4 +42,3 @@ def query_to_dnf(query):
         query_expr = sympify(query_expr,evaluate=False)
     query_dnf = to_dnf(query_expr, simplify=True,force=True)
     return query_dnf
-#print(query_to_dnf('what & similarity & laws & must & be & obeyed & when & constructing & aeroelastic & heated & high & speed & aircraft'))

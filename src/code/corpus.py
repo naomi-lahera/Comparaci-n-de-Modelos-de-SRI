@@ -1,14 +1,8 @@
-import ir_datasets
-from createtfidfjoblib import save_info_to_Joblib
-from sklearn.feature_extraction.text import TfidfVectorizer
-import prepro
 from joblib import load
 import cargar
 
-# 'msmarco-document-v2/trec-dl-2022'
-
 class corpus:
-    def __init__(self, data_name, docs_num):
+    def __init__(self, data_name):
         loaded_data = ''
         if data_name == "":
             data_name = 'cranfield'
@@ -16,15 +10,9 @@ class corpus:
             data_name = loaded_data['data_name']
             
         else:
-            cargar.cargar(data_name,docs_num)
+            cargar.cargar(data_name)
             loaded_data = load(f'data_{data_name}.joblib')
 
-        # Cargar los datos desde el archivo
-
-        # Cargar un conjunto de datos específico
-        #self.dataset = loaded_data['dataset']
-        # Obtener los documentos
-        #self.docs_iter = loaded_data['docs_iter']
         # Obtener cada texto por cada documentos
         self.docs = loaded_data['docs']
         self.preprocessed_docs = loaded_data['preprocessed_docs']
