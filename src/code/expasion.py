@@ -1,11 +1,11 @@
 import nltk
-import random
 
 #Descargar WordNet
 #nltk.download('omw-1.4')
 #nltk.download('wordnet')
 
-# Importar WordNet correctamente
+nltk.data.path.clear()
+nltk.data.path.append('./')
 from nltk.corpus import wordnet as wn
 
 def expand_query_with_wordnet(query):
