@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
+import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,10 @@ import { PrimeNgModule } from './prime-ng/prime-ng.module';
   imports: [
     RouterOutlet,
     ToolbarComponent,
-    PrimeNgModule
+    PrimeNgModule,
+    HttpClientModule
   ],
+  providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

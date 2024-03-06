@@ -1,11 +1,12 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { PrimeNgModule } from '../../prime-ng/prime-ng.module';
 import { CommonModule } from '@angular/common';
 import { DocsDialogComponent } from './docs-dialog/docs-dialog.component';
 import { Query } from '../../interfaces/query';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
+import { QueriesService } from '../../services/queries.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-queries-details',
@@ -14,57 +15,61 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     PrimeNgModule,
     RouterModule,
+    HttpClientModule
   ],
   providers: [
-    DialogService,
-    MessageService
+    DialogService
   ],
   templateUrl: './queries-details.component.html',
   styleUrl: './queries-details.component.css'
 })
-export class QueriesDetailsComponent {
+export class QueriesDetailsComponent implements OnInit {
 
-  constructor(private dialogService: DialogService, private messageService: MessageService) { }
+  constructor(private qservice: QueriesService, private dialogService: DialogService) { }
+  async ngOnInit() {
+    this.queires = await this.qservice.getQueries()
+  }
 
   ref: DynamicDialogRef | undefined;
-  queires: Query[] = [
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    },
-    {
-      text: 'text_0',
-      id: '0'
-    }
-  ]
+  queires!: Query[];
+  // [
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   },
+  //   {
+  //     text: 'text_0',
+  //     id: '0'
+  //   }
+  // ]
 
   async showDocsDialog(query: Query) {
     this.ref = this.dialogService.open(DocsDialogComponent, {

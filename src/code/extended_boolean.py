@@ -98,8 +98,6 @@ def init():
         feature_names = {word: index for index, word in enumerate(feature_names)}
 
         first = False
-        
-    
 
 def get_similar_docs(query):
     query_dnf = query_to_dnf(query)
@@ -110,6 +108,9 @@ def get_similar_docs(query):
 
     scores = sim(query_literals, query_dnf)
     return scores
+
+def docs_from_query_id(id):
+    return get_similar_docs(_corpus.queries[id][1])
 
 def get_literals_from_dnf(dnf):
     literals = []
