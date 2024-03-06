@@ -85,8 +85,8 @@ def sim(query_list, query_dnf):
     scores = dict([item for item in sorted(scores.items(), key=lambda item: item[1], reverse=True) if item[1] > 0])
 
     
-    for i, (doc, val) in enumerate(scores.items()):
-        print(f'{doc} , {val}')
+    # for i, (doc, val) in enumerate(scores.items()):
+    #     print(f'{doc} , {val}')
     return scores
 
                     
@@ -129,9 +129,11 @@ def get_similar_docs(query):
     print(f"Tiempo de ejecución de init: {elapsed_time} segundos")
 
     start_time = time.time()
-    sim(query_literals, query_dnf)
+    score = sim(query_literals, query_dnf)
     elapsed_time = time.time() - start_time
     print(f"Tiempo de ejecución de sim: {elapsed_time} segundos")
+
+    return score
 
 
 def get_literals_from_dnf(dnf):

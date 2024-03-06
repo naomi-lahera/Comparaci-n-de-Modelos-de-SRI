@@ -6,6 +6,7 @@ class CranfieldData:
     def __init__(self):
         _corpus = corpus("",100)
         self.corpus = _corpus
+        self.docs = self.corpus.docs
         #self.dataset = ir_datasets.load('cranfield')
         self.query_pairs = self._get_query_pairs()
         self.qrels = _corpus.qrels
@@ -23,6 +24,31 @@ class CranfieldData:
         for qrel in qrels_iter:
             qrels.append((qrel.query_id, qrel.doc_id, qrel.relevance))
         return qrels
+    
+    def get_query_ids(self):
+        """Returns a set with the IDs of the queries."""
+        return set(query_id for query_id, _ in self.query_pairs)
+
+class RelevanceDocumentSetBuilder:
+    @staticmethod
+    def build_relevance_document_sets(documents, query_id, qrels):
+        relevant_documents = set()
+        irrelevant_documents = set()
+        
+        # Crear un conjunto de todos los ID de documentos
+        document_ids_set = {doc.doc_id for doc in documents}
+        
+        # Extraer los ID de los documentos con relevancia diferente de -1 para la consulta dada
+        for qrel in qrels:
+            if qrel.query_id == query_id:
+                if qrel.relevance != -1:
+                    relevant_documents.add(qrel.doc_id)
+        
+        # Calcular los documentos irrelevantes como el conjunto de todos los documentos menos los relevantes
+        irrelevant_documents = document_ids_set - relevant_documents
+        
+        # Devolver los conjuntos de documentos relevantes e irrelevantes
+        return relevant_documents, irrelevant_documents
 
 class QueryMetrics:
     def __init__(self):
@@ -48,58 +74,77 @@ class QueryMetrics:
 
 class MetricsCalculator:
 
+    def __init__(self, relevant, irrelevant, retrieved):
+        self.relevant = relevant
+        self.irrelevant = irrelevant
+        self.retrieved = retrieved
+        
+        self.RR = relevant.intersection(retrieved)
+        self.RI = irrelevant.intersection(retrieved)
+        self.NR = relevant - retrieved
+        self.NI= irrelevant - retrieved
+        
     @staticmethod
-    def precision(relevant_retrieved, irrelevant_retrieved):
+    def precision():
         """Calculates the fraction of retrieved information that is relevant."""
-        union = relevant_retrieved.union(irrelevant_retrieved)
+        union = self.RR.union(self.RI)
         if len(union) == 0:
             return 0
-        return len(relevant_retrieved) / len(union)
+        return len(self.RR) / len(union)
 
     @staticmethod
-    def recall(relevant_retrieved, relevant_not_retrieved):
+    def recall():
         """Calculates recall."""
-        union = relevant_retrieved.union(relevant_not_retrieved)
+        union = self.RR.union(self.NR)
         if len(union) == 0:
             return 0
-        return len(relevant_retrieved) / len(union)
+        return len(self.RR) / len(union)
 
     @staticmethod
-    def f_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved, beta=1):
+    def f_measure(beta=1):
         """Calculates F-measure."""
-        precision = MetricsCalculator.precision(relevant_retrieved, irrelevant_retrieved)
-        recall = MetricsCalculator.recall(relevant_retrieved, relevant_not_retrieved)
+        precision = MetricsCalculator.precision()
+        recall = MetricsCalculator.recall()
         if precision + recall == 0:
             return 0
         return (1 + beta**2) * (precision * recall) / ((beta**2 * precision) + recall)
 
     @staticmethod
-    def f1_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved):
+    def f1_measure():
         """Calculates F1-measure."""
-        return MetricsCalculator.f_measure(relevant_retrieved, irrelevant_retrieved, relevant_not_retrieved, beta=1)
+        return MetricsCalculator.f_measure(beta=1)
 
     @staticmethod
-    def r_precision(relevant_retrieved, irrelevant_retrieved):
+    def r_precision():
         """Calculates R-Precision."""
-        union = relevant_retrieved.union(irrelevant_retrieved)
+        union = self.RR.union(self.RI)
         if len(union) == 0:
             return 0
-        return len(relevant_retrieved) / len(union)
+        return len(self.RR) / len(union)
 
 
 def main():
     cranfield_data = CranfieldData()
 
-    docs = getDocs('bind or number and value')
+    docs = getDocs('bind and number and value')
+    retrieved_documents_set = set(docs.keys())
+    
+    for query_id, query_text in cranfield_data.query_pairs:
+        # Obtén los documentos recuperados para esta consulta
+        retrieved_documents = getDocs(query_text)
+        # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
+        relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(documents, query_id, qrels)
 
-    # Acceso a las variables públicas de la clase
-    # print("Query pairs:")
-    # for query_id, query_text in cranfield_data.query_pairs:
-    #     print(f"Query ID: {query_id}, Query Text: {query_text}")
-
-    # print("\nQrels:")
-    # for query_id, doc_id, relevance in cranfield_data.qrels:
-    #     print(f"Query ID: {query_id}, Document ID: {doc_id}, Relevance: {relevance}")
+        # Creamos una instancia de MetricsCalculator con los conjuntos relevantes, irrelevantes y recuperados
+        metrics_calculator = MetricsCalculator(relevant_docs, irrelevant_docs, retrieved_docs)
+        
+        # Calculamos y mostramos algunas métricas para la consulta actual
+        print(f"Query ID: {query_id}")
+        print("Precision:", metrics_calculator.precision())
+        print("Recall:", metrics_calculator.recall())
+        print("F-measure:", metrics_calculator.f_measure())
+        print("F1-measure:", metrics_calculator.f1_measure())
+        print("R-Precision:", metrics_calculator.r_precision())
 
 if __name__ == "__main__":
     main()
