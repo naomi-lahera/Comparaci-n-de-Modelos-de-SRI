@@ -1,42 +1,18 @@
-
-<div class="card">
-    <p-table
-        #dt
-        [value]="docs"
-        [rows]="10"
-        [paginator]="true"
-        [globalFilterFields]="['title']"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-    >
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <!-- <h5 class="m-0">Returned Documents</h5> -->
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
-                </span>
+<ul class="list-none p-3 m-0">
+    <li>
+        <p-toast></p-toast>
+        <p-confirmPopup></p-confirmPopup>
+        <ul class="list-none p-0 m-0 overflow-hidden">
+            <div *ngFor="let doc of docs">
+                <div>
+                    <li (click)="confirm1($event, doc)">
+                        <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                            <!-- <i class="pi pi-search mr-2"></i> -->
+                            <span class="font-medium">{{doc.title}}</span>
+                        </a>
+                    </li>
+                </div>
             </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="name" style="min-width:15rem">Title<p-sortIcon field="name"></p-sortIcon></th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-doc>
-            <tr>
-                <td>{{ doc.title }}</td>
-                <td>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(doc)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">In total there are {{ docs ? docs.length : 0 }} products.</div>
-        </ng-template>
-    </p-table>
-</div>
+        </ul>
+    </li>
+</ul>
