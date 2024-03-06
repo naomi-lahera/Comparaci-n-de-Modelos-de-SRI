@@ -20,7 +20,7 @@ def get_tfidf_value(document_text, word, matrix):
     except:
         return 0
 
-def boolean_extended(query_list, query_dnf, _corpus, matrix, feature_names):
+def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_names,feedback):
     """
     Calcula y devuelve una puntuación para cada documento en el corpus basada en una consulta dada, 
     utilizando una representación en Disjunctive Normal Form (DNF) de la consulta y una matriz de 
@@ -50,6 +50,8 @@ def boolean_extended(query_list, query_dnf, _corpus, matrix, feature_names):
     literals_total = len(query_list)
     scores = dict()
     for doc_index, doc in enumerate(_corpus.docs):
+        if doc_index in feedback[query_id]:
+            continue 
         _or = 0
         _or_count = 0
         for clause in query_dnf.args:
