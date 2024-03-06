@@ -229,4 +229,4 @@ def main(model):
 
 if __name__ == "__main__":
     main("boolean")
-    #m+ain("extended")
+    main("extended")
