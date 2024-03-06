@@ -43,7 +43,8 @@ class RelevanceDocumentSetBuilder:
         for qrel in qrels:
             if qrel.query_id == query_id:
                 if qrel.relevance != -1:
-                    relevant_documents.add(qrel.doc_id)
+                    relevant_documents.add(int(qrel.doc_id))
+
         
         # Calcular los documentos irrelevantes como el conjunto de todos los documentos menos los relevantes
         irrelevant_documents = document_ids_set - relevant_documents
@@ -78,8 +79,8 @@ class MetricsCalculator:
     def __init__(self, relevant, irrelevant, retrieved):
         self.relevant = relevant
         self.irrelevant = irrelevant
-        self.retrieved = retrieved
-        
+        self.retrieved = set(retrieved)
+
         self.RR = relevant.intersection(retrieved)
         self.RI = irrelevant.intersection(retrieved)
         self.NR = relevant - retrieved
@@ -89,6 +90,7 @@ class MetricsCalculator:
         # print("RI: ", self.RI)
         # print("NR: ", self.NR)
         # print("NI: ", self.NI)
+        # raise Exception("Stop")
         
     def precision(self):
         """Calculates the fraction of retrieved information that is relevant."""
@@ -137,10 +139,14 @@ def main():
         # Itera sobre cada par de consulta y texto de consulta
         for query_id, query_text in cranfield_data.query_pairs:
             # Obtén los documentos recuperados para esta consulta
-            retrieved_documents = getDocs(query_text).keys()
+            retrieved_dict_keys = getDocs(query_text).keys()
+            retrieved_documents = set(int(key) for key in retrieved_dict_keys)
             
             # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
             relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
+
+            # print("Relevantes: ", relevant_documents)
+            # print("Irrelevantes: ", irrelevant_documents)
 
             # Creamos una instancia de MetricsCalculator con los conjuntos relevantes, irrelevantes y recuperados
             metrics_calculator = MetricsCalculator(relevant_documents, irrelevant_documents, retrieved_documents)
