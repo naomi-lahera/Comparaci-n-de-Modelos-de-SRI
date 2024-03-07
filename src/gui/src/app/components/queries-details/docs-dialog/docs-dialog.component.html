@@ -1,5 +1,5 @@
 <p-divider></p-divider>
-<ul class="list-none p-3 m-0">
+<!-- <ul class="list-none p-3 m-0">
     <li>
         <p-toast></p-toast>
         <p-confirmPopup></p-confirmPopup>
@@ -8,7 +8,7 @@
                 <div>
                     <li (click)="confirm1($event, doc)">
                         <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                            <!-- <i class="pi pi-search mr-2"></i> -->
+                            <span class="text-pink-500" style="margin-right: 5px;">~</span>
                             <span class="font-medium">{{doc.title}}</span>
                         </a>
                     </li>
@@ -16,4 +16,20 @@
             </div>
         </ul>
     </li>
-</ul>
+</ul> -->
+
+<p-accordion [activeIndex]="0">
+    <div *ngFor="let doc of docs">
+        <p-accordionTab header="{{doc.title}}">
+            <!-- <p-toast></p-toast>
+            <p-confirmPopup></p-confirmPopup> -->
+            <div>
+                <p>
+                    {{doc.text}}
+                </p>
+                <p-confirmDialog></p-confirmDialog>
+                <p-button (click)="confirm1($event, doc)" icon="pi pi-trash" [rounded]="true" [text]="true" severity="secondary "></p-button>    
+            </div>
+        </p-accordionTab>
+    </div>
+</p-accordion>
