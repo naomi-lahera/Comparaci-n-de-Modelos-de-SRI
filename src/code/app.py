@@ -12,14 +12,14 @@ def get_docs():
     query_id = request.args.get('query_id')
     docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
     # print(docs_dict)
-    print('docs_dict: ', len(docs_dict))
-    print('docs_dict: ', len(returned_docs))
+    # print('docs_dict: ', len(docs_dict))
+    # print('docs_dict: ', len(returned_docs))
     if query_id:
         return jsonify(
             [
                 {
                     'id': int(doc[0]),
-                    'title': doc[1],
+                    'title': doc[1][0].upper() + doc[1][1:],
                     'text': doc[2]
                 }
                 for doc in returned_docs
@@ -29,14 +29,14 @@ def get_docs():
 
 @app.route('/api/get_queries', methods=['GET'])
 def get_sources():
-    return jsonify([{'id': query.query_id, 'text': query.text} for query in _corpus.queries])
+    return jsonify([{'id': query.query_id, 'text': query.text[0].upper() + query.text[1:]} for query in _corpus.queries])
 
 @app.route('/api/delete-doc', methods=['GET'])
 def delete_doc_query():
     query_id = request.args.get('query_id')
     doc_id = request.args.get('doc_id')
     update_feedback_testing_models(int(query_id), int(doc_id))
-    print('update feedback')
+    # print('update feedback')
     docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
     # print(docs_dict)
     # print(docs_dict)
@@ -45,7 +45,7 @@ def delete_doc_query():
             [
                 {
                     'id': int(doc[0]),
-                    'title': doc[1],
+                    'title': doc[1][0].upper() + doc[1][1:],
                     'text': doc[2]
                 }
                 for doc in returned_docs

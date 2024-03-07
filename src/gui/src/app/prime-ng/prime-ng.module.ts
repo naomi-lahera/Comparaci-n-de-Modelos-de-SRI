@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DividerModule } from 'primeng/divider';
 import { FormsModule } from '@angular/forms';
@@ -28,11 +30,13 @@ import { ToolbarModule } from 'primeng/toolbar';
     CommonModule
   ],
   exports:[
+    AccordionModule,
     ButtonModule,
     CardModule,
     CheckboxModule,
     ChartModule,
     CommonModule,
+    ConfirmDialogModule,
     ConfirmPopupModule,
     DividerModule,
     FormsModule,

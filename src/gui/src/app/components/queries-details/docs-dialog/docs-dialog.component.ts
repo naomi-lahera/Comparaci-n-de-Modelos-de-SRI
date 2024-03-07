@@ -113,7 +113,6 @@ export class DocsDialogComponent implements OnInit {
 
   async confirm1(event: Event, doc: Doc) {
     this.confirmationService.confirm({
-        target: event.target as EventTarget,
         message: 'Quiere eliminar la relacion de este documento con esta query?',
         icon: 'pi pi-exclamation-triangle',
         accept: async () => {
@@ -122,6 +121,7 @@ export class DocsDialogComponent implements OnInit {
             console.log('update done')      
           }
     });
+    // this.docs = await this.qService.deleteDoc(this.query.id, doc.id)
   }
 
   onCancel() {
