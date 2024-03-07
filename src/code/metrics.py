@@ -122,7 +122,7 @@ class MetricsCalculator:
     - recall(self): Calcula el recall.
     - f_measure(self, beta=1): Calcula la medida F.
     - f1_measure(self): Calcula la medida F1.
-    - r_precision(self): Calcula la precisión R.
+    - accuracy(self): Calcula la exactitud.
     """
     def __init__(self, relevant, irrelevant, retrieved):
         self.relevant = relevant
@@ -166,12 +166,13 @@ class MetricsCalculator:
         """Calculates F1-measure."""
         return self.f_measure(beta=1)
 
-    def r_precision(self):
-        """Calculates R-Precision."""
-        union = self.RR.union(self.RI)
-        if len(union) == 0:
+    def accuracy(self):
+        """Calculates Accuracy."""
+        total_retrieved = len(self.RR) + len(self.RI)
+        total_documents = len(self.relevant) + len(self.irrelevant)
+        if total_documents == 0:
             return 0
-        return len(self.RR) / len(union)
+        return (len(self.RR) + len(self.NI)) / total_documents
 
 
 def main(model):
@@ -193,7 +194,7 @@ def main(model):
         writer = csv.writer(file)
 
         # Escribe el encabezado del archivo CSV
-        writer.writerow(['Query ID', 'Precision', 'Recall', 'F-measure', 'F1-measure', 'R-Precision'])
+        writer.writerow(['Query ID', 'Precision', 'Recall', 'F-measure', 'F1-measure', 'Accuracy'])
 
         # Itera sobre cada par de consulta y texto de consulta
         for query_id, query_text in cranfield_data.query_pairs:
@@ -221,10 +222,10 @@ def main(model):
             recall = metrics_calculator.recall()
             f_measure = metrics_calculator.f_measure()
             f1_measure = metrics_calculator.f1_measure()
-            r_precision = metrics_calculator.r_precision()
+            accuracy = metrics_calculator.accuracy()
 
             # Escribe las métricas en el archivo CSV
-            writer.writerow([query_id, precision, recall, f_measure, f1_measure, r_precision])
+            writer.writerow([query_id, precision, recall, f_measure, f1_measure, accuracy])
 
 if __name__ == "__main__":
     main("boolean")
