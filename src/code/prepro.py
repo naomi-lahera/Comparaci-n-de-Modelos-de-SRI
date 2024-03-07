@@ -57,7 +57,6 @@ def preprocess_documents(documents, is_query):
     if is_query:
       lista = [token.text for token in tokenized_docs[0]]
       strin = " ".join(lista)
-      print(strin)
       return strin
     
     #Reducción Morfológica

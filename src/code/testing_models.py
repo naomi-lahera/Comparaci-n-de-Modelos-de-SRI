@@ -46,7 +46,7 @@ def init():
 
         first = False
         
-def get_similar_docs(query_id,method):
+def get_similar_docs(query_id, method):
     """
     Obtiene documentos similares a una consulta dada utilizando un método específico de recuperación de información.
 
@@ -62,16 +62,16 @@ def get_similar_docs(query_id,method):
     - La función utiliza el método `query_to_dnf` para convertir la consulta en su forma Disjunctive Normal Form (DNF).
     - Dependiendo del método especificado, utiliza el modelo booleano o una versión extendida del modelo booleano para calcular las puntuaciones.
     """
+    print(type(query_id))
     query =_corpus.queries[int(query_id)][1]
+    print(type(query))
     query_dnf = query_to_dnf(query)
-
     query_literals = get_literals_from_dnf(query_dnf)
-
     init()
     if method == "boolean":
         scores = boolean(query_dnf,_corpus.preprocessed_docs)
     else:
-        query_id = _corpus.docs_iter
+        # query_id = _corpus.docs_iter
         scores = boolean_extended( query_id,query_literals, query_dnf,_corpus,matrix,feature_names,feedback)
     return scores
 
@@ -94,9 +94,12 @@ def get_literals_from_dnf(dnf):
         if isinstance(disjunct, Not):
             literals.append(f"~{str(disjunct.args[0])}")  # Include the negation symbol (~)
         else:
-            for literal in disjunct.args:
-                # Access the literal directly without using 'as_independent'
-                literals.append(str(literal))
+            if disjunct.is_Atom:
+                literals.append(str(disjunct))
+            else:
+                for literal in disjunct.args:
+                    # Access the literal directly without using 'as_independent'
+                    literals.append(str(literal))
     return list(set(literals))
 
 def update_feedback_testing_models(query_id, doc_id):

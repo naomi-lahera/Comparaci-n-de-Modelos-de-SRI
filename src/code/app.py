@@ -9,17 +9,19 @@ CORS(app)
 @app.route('/api/search', methods=['GET'])
 def get_docs():
     query_id = request.args.get('query_id')
-    docs_dict = get_similar_docs(int(query_id), 'extended')
+    docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
     # print(docs_dict)
+    print('docs_dict: ', len(docs_dict))
+    print('docs_dict: ', len(returned_docs))
     if query_id:
         return jsonify(
             [
                 {
-                    'id': _corpus.docs_iter[doc_id][0],
-                    'title': _corpus.docs_iter[doc_id][1],
-                    'text': _corpus.docs_iter[doc_id][2]
+                    'id': int(doc[0]),
+                    'title': doc[1],
+                    'text': doc[2]
                 }
-                for doc_id, score in docs_dict.items()
+                for doc in returned_docs
             ])
         
     return jsonify({'error': 'Missing query parameter'}), 400
@@ -42,17 +44,18 @@ def delete_doc_query():
     doc_id = request.args.get('doc_id')
     update_feedback_testing_models(int(query_id), int(doc_id))
     print('update feedback')
-    docs_dict = get_similar_docs(int(query_id), 'extended')
+    docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
+    # print(docs_dict)
     # print(docs_dict)
     if query_id and doc_id:
         return jsonify(
             [
                 {
-                    'id': _corpus.docs_iter[doc_id][0],
-                    'title': _corpus.docs_iter[doc_id][1],
-                    'text': _corpus.docs_iter[doc_id][2]
+                    'id': int(doc[0]),
+                    'title': doc[1],
+                    'text': doc[2]
                 }
-                for doc_id, score in docs_dict.items()
+                for doc in returned_docs
             ])
     return jsonify({'mdg': 'Error'})
 

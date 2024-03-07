@@ -6,7 +6,7 @@
 - Loitzel Ernesto Morales Santiesteban
 
 ## Definición del Modelo de SRI Implementado:
-El modelo de Sistema de Recuperación de Información (SRI) implementado es una combinación de técnicas clásicas de recuperación de información basadas en extensiones del modelo booleano que mejoran la capacidad de recuperación mediante la expansión de consultas y la consideración de la relevancia de los términos en los documentos. Se establece omo objetivo establecer una comparativa objetiva con el modelo booleano basico
+El modelo de Sistema de Recuperación de Información (SRI) implementado es una combinación de técnicas clásicas de recuperación de información basadas en extensiones del modelo booleano que mejoran la capacidad de recuperación mediante la expansión de consultas y la consideración de la relevancia de los términos en los documentos. Se establece omo objetivo establecer una comparativa objetiva con el modelo booleano basico. Como funcionalides se implementa una expansion de consulta utilizando wordnet, de esta manera se pueden recuperar documentos de interés aun si no se encuentra exactamente lo buscado en la consulta. Por ultimo se implementaron metodos de feedback, mediante los cuales se pueden de manera manual modificar los resultados provistos por una consulta
 
 ## Consideraciones Tomadas a la Hora de Desarrollar la Solución:
 Al desarrollar la solución, se consideraron varios aspectos importantes:
@@ -34,7 +34,7 @@ Se llevó a cabo una comparativa entre el modelo booleano base y el modelo exten
 - Precisión
 - Recobrado
 - Medida F y F1
-- R-Precision
+- Accuracy
 
 Esta comparativa permitió entender cómo la extensión del modelo booleano afecta la calidad de los resultados de la recuperación de información, especialmente en consultas más complejas y en conjuntos de datos variados.
 

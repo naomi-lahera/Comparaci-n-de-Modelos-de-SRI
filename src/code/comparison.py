@@ -40,4 +40,3 @@ def obtain_column(column_name):
     return columns.values()
 
 result = obtain_column('Precision')
-print(result)
