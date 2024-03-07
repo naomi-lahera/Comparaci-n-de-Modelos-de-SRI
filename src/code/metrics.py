@@ -202,9 +202,9 @@ def main(model):
             print(f'{query_id}')
             # Obtén los documentos recuperados para esta consulta
             try:
-                retrieved_dict_keys = getDocs(query_text,model).keys()
+                retrieved_dict_keys = getDocs(query_id,model).keys()
             except:
-                retrieved_dict_keys = getDocs(query_text,model)
+                retrieved_dict_keys = getDocs(query_id,model)
             
             retrieved_documents = set(int(key) for key in retrieved_dict_keys)
             
@@ -229,5 +229,4 @@ def main(model):
 
 if __name__ == "__main__":
     #main("boolean")
-    #main("extended")
-    pass
+    main("extended")

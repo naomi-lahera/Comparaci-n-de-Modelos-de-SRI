@@ -28,8 +28,17 @@ export class QueriesService {
       })
   }
 
-  async deleteDoc(query_id: string, doc_id: string) {
+  async deleteDoc(query_id: string, doc_id: string): Promise<Doc[]>{
     let params = new HttpParams().set('query_id', query_id).set('doc_id', doc_id);
-    return await this.httpClient.delete(`${this.apiUrl}/api/delete-doc`, {params: params})
+    return await firstValueFrom(this.httpClient.get<Doc[]>(`${this.apiUrl}/api/delete-doc`, {params: params}))
+      .then(response => {
+        console.log('get documents service');
+        return response as Doc[];
+      })
   }
+  
+  // async deleteDoc(query_id: string, doc_id: string) {
+  //   let params = new HttpParams().set('query_id', query_id).set('doc_id', doc_id);
+  //   return await this.httpClient.delete(`${this.apiUrl}/api/delete-doc`, {params: params})
+  // }
 }

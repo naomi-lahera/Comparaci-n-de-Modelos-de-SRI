@@ -1,7 +1,7 @@
 import joblib
 import os
 
-def update_feedback(id_query, list_docs_vetados):
+def update_feedback(id_query, doc_id):
     """
     Actualiza o crea un archivo feedback.joblib con comentarios de documentos vetados.
 
@@ -16,23 +16,25 @@ def update_feedback(id_query, list_docs_vetados):
     """
     # Nombre del archivo
     filename = "feedback.joblib"
+    
+    doc_id = int(doc_id)
 
     # Verifica si el archivo existe
     if not os.path.exists(filename):
         # Crea un diccionario vacío si el archivo no existe
-        feedback = {}
+        feedback = dict()
     else:
         # Carga el diccionario si existe
         feedback = joblib.load(filename)
     
     # Verifica si la clave id_query ya existe en el diccionario
-    if id_query in feedback:
+    try:
         # Si existe, actualiza su valor con la lista de documentos vetados
-        feedback[id_query].extend(list_docs_vetados)
+        feedback[id_query].append(doc_id)
         feedback[id_query] = list(set(feedback[id_query]))
-    else:
+    except:
         # Si no existe, añade una nueva entrada con la clave id_query y la lista de documentos vetados
-        feedback[id_query] = list_docs_vetados
+        feedback[id_query] = [doc_id]
     
     # Guarda el diccionario modificado en el archivo
     joblib.dump(feedback, filename)

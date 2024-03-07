@@ -117,8 +117,7 @@ export class DocsDialogComponent implements OnInit {
         message: 'Quiere eliminar la relacion de este documento con esta query?',
         icon: 'pi pi-exclamation-triangle',
         accept: async () => {
-            await this.qService.deleteDoc(this.query.id, doc.id)
-            this.ngOnInit()
+          this.docs = await this.qService.deleteDoc(this.query.id, doc.id)
             // this.docs = await this.qService.getDocs(this.query.id)  
             console.log('update done')      
           }
