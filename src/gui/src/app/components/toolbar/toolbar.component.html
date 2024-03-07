@@ -1,7 +1,7 @@
 <div class="card flex justify-content-center">
     <p-sidebar [(visible)]="sidebarVisible" [style]="{'width':' 200px'}">
         <ng-template pTemplate="header">
-            <div  class="font-medium font-bold">Guide</div></ng-template>
+            <div  class="font-medium font-bold">Guía</div></ng-template>
         <ng-template pTemplate="content">
             <ul class="list-none p-3 m-0">
                 <li>
@@ -9,19 +9,19 @@
                         <li [routerLink]="'/'">
                             <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                 <i class="pi pi-home mr-2"></i>
-                                <span class="font-medium">Home</span>
+                                <span class="font-medium">Inicio</span>
                             </a>
                         </li>
                         <li [routerLink]="'/data'">
                             <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                 <i class="pi pi-chart-bar mr-2"></i>
-                                <span class="font-medium">Data</span>
+                                <span class="font-medium">Datos</span>
                             </a>
                         </li>
                         <li [routerLink]="'/search'">
                             <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                 <i class="pi pi-search mr-2"></i>
-                                <span class="font-medium">Search</span>
+                                <span class="font-medium">Búsqueda</span>
                             </a>
                         </li>
                     </ul>
@@ -29,9 +29,9 @@
             </ul>
         </ng-template>
         <ng-template pTemplate="footer">
-            <span class="font-bold">Havana University</span>
+            <span class="font-bold">Universidad de la Habana</span>
         </ng-template>
     </p-sidebar>
-    <p-button label="Go to" [rounded]="true" [text]="true" severity="secondary " (click)="sidebarVisible = true">
+    <p-button label="Ir a" [rounded]="true" [text]="true" severity="secondary " (click)="sidebarVisible = true">
     </p-button>
 </div>
