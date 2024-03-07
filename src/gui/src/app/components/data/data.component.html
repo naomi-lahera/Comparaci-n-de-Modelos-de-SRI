@@ -1,8 +1,8 @@
 
 <div class="surface-section px-4 py-0 md:px-6 lg:px-8 text-center">
     <div class="mb-3 font-bold text-3xl">
-        <span class="text-900 text-6xl">Comparación de resultados, </span>
-        <span class="text-blue-600 text-6xl">Booleano vs Booleano Extendido</span>
+        <span class="text-900 text-4xl">Comparación de resultados, </span>
+        <span class="text-blue-600 text-4xl">Booleano vs Booleano Extendido</span>
     </div>
     <div class="text-700 mb-6">Para la evaluación de estos modelos se utilizaron los conjuntos de datos Cranfield
         y Vaswani y las siguientes medidas.
@@ -12,54 +12,50 @@
     <div class="grid">
         <div class="col-6 md:col-6 mb-4 px-5">
             <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                <span class="text-900 font-bold">Precisión : </span>
-                <span class="text-700 line-height-3"> Fracción de los documentos recobrados que son relevantes.</span>
+                <span class="text-900 font-bold">Exactitud: </span>
+                <span class="text-700 line-height-3">Proporción de documentos recuperados contra total de documentos</span>
 
                 <div class="card">
-                    <p-chart type="bar" [data]="precision" [options]="basicOptions"></p-chart>
+                    <p-chart type="line" [data]="exactitud" [options]="options"></p-chart>
                 </div>
             </span>
-            <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
+            <!-- <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span> -->
         </div>
 
         <div class="col-6 md:col-6 mb-4 px-5">
             <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                <span class="text-900 font-bold"> Recobrado: </span>
+                <span class="text-900 font-bold">Recobrado: </span>
                 <span class="text-700 line-height-3">  Fracción de los documentos relevantes que fueron recuperados.</span>
 
                 <div class="card">
-                    <p-chart type="bar" [data]="recobrado" [options]="basicOptions"></p-chart>
+                    <p-chart type="line" [data]="recobrado" [options]="options"></p-chart>
                 </div>
             </span>
-            <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
+            <!-- <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span> -->
         </div>
 
         <div class="col-6 md:col-6 mb-4 px-5">
             <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
                 <span class="text-900 font-bold">Medida F: </span>
-                <span class="text-700 line-height-3"> : La Precisón y el Recobrado pueden ser a veces medidad contrarias,
-                    por lo que debe haber una forma de medirlos de manera integral. Se utiliza
-                    F como una media armónica de la tasa de precisión y la tasa de recobrado.
-                    En nuestro cálculo damos más importancia a la precisión haciendo β = 1.2</span>
+                <span class="text-700 line-height-3">Combina precisión y recobrado en una sola métrica, ponderando ambos igualmente.</span>
 
                 <div class="card">
-                    <p-chart type="bar" [data]="medidaF" [options]="basicOptions"></p-chart>
+                    <p-chart type="line" [data]="medidaF" [options]="options"></p-chart>
                 </div>
             </span>
-            <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
+            <!-- <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span> -->
         </div>
 
         <div class="col-6 md:col-6 mb-4 px-5">
             <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
                 <span class="text-900 font-bold">Medida F1: </span>
-                <span class="text-700 line-height-3"> Es similar a F solo que le da igual importancia a la Precisión y
-                    al Recobrado, mientras mayor sea F1 la prueba es más exitosa.</span>
+                <span class="text-700 line-height-3">Es una versión específica de la medida F (F-measure) con un equilibrio igual entre precisión y recobrado.</span>
 
                 <div class="card">
-                    <p-chart type="bar" [data]="medidaF1" [options]="basicOptions"></p-chart>
+                    <p-chart type="line" [data]="medidaF1" [options]="options"></p-chart>
                 </div>
             </span>
-            <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
+            <!-- <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span> -->
         </div>
 
         <!-- <div class="flex justify-content-center flex-wrap gap-3 mb-4">
