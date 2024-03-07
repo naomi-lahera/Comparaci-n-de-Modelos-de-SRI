@@ -30,12 +30,12 @@ class Corpus:
         loaded_data = ''
         if data_name == "":
             data_name = 'cranfield'
-            loaded_data = load(f'data_{data_name}.joblib')
+            loaded_data = load(f'./data/data_{data_name}.joblib')
             data_name = loaded_data['data_name']
             
         else:
             cargar.cargar(data_name)
-            loaded_data = load(f'data_{data_name}.joblib')
+            loaded_data = load(f'./data/data_{data_name}.joblib')
 
         # Obtener cada texto por cada documento
         self.docs = loaded_data['docs']

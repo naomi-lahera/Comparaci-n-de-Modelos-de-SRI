@@ -12,7 +12,7 @@ def obtain_column(column_name):
     list: A list of tuples containing the query ID and the column value for each CSV file.
         Each tuple is structured as ((id, column), (id, column)).
     """
-    csv1, csv2 = 'Metricas_boolean.csv', 'Metricas_extended.csv'
+    csv1, csv2 = './data/Metricas_boolean.csv', './data/Metricas_extended.csv'
     columns = {}
 
     # Validate that the column name is valid

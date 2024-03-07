@@ -15,7 +15,7 @@ def update_feedback(id_query, doc_id):
         list_docs_vetados (list): Lista de identificadores de documentos vetados.
     """
     # Nombre del archivo
-    filename = "feedback.joblib"
+    filename = "./data/feedback.joblib"
     
     doc_id = int(doc_id)
 

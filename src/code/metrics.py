@@ -190,7 +190,7 @@ def main(model):
     """
     cranfield_data = CranfieldData()
     # Abre un archivo CSV en modo escritura
-    with open(f'Metricas_{model}.csv', mode='w', newline='') as file:
+    with open(f'./data/Metricas_{model}.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
 
         # Escribe el encabezado del archivo CSV

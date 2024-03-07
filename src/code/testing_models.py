@@ -11,7 +11,7 @@ _corpus = Corpus("")
 matrix = ''
 vectorizer = ''
 feature_names = dict()
-filename = "feedback.joblib"
+filename = "./data/feedback.joblib"
 
 # Verifica si el archivo existe
 if not os.path.exists(filename):
@@ -37,8 +37,8 @@ def init():
     global vectorizer
     
     if first:
-        mat_url = f'./cranfield_matrix.joblib'
-        vec_url = f'./cranfield_vect.joblib'
+        mat_url = f'./data/cranfield_matrix.joblib'
+        vec_url = f'./data/cranfield_vect.joblib'
         matrix = joblib.load(mat_url)
         vectorizer = joblib.load(vec_url)        
         feature_names = vectorizer.get_feature_names_out()

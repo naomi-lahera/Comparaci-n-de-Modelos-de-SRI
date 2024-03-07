@@ -39,7 +39,7 @@ def save_info_to_Joblib(docs, corpus_name):
     tfidf_matrix = tfidf_vectorizer.fit_transform(preprocessed_docs)
     
     # Guardar el vectorizador y la matriz en archivos joblib
-    joblib.dump(tfidf_vectorizer, f'{corpus_name}_vect.joblib')
-    joblib.dump(tfidf_matrix, f'{corpus_name}_matrix.joblib')
+    joblib.dump(tfidf_vectorizer, f'./data/{corpus_name}_vect.joblib')
+    joblib.dump(tfidf_matrix, f'./data/{corpus_name}_matrix.joblib')
     
     return tfidf_vectorizer
