@@ -16,7 +16,7 @@ def obtain_column(column_name):
     columns = {}
 
     # Validate that the column name is valid
-    valid_column_names = ['Query ID', 'Precision', 'Recall', 'F-measure', 'F1-measure', 'R-Precision']
+    valid_column_names = ['Query ID', 'Precision', 'Recall', 'F-measure', 'F1-measure', 'Accuracy']
     if column_name not in valid_column_names:
         raise ValueError("The column name is not valid")
 

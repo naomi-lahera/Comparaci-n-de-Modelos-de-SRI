@@ -1,5 +1,6 @@
 from testing_models import get_similar_docs, _corpus
 from testing_models import update_feedback_testing_models
+from comparison import obtain_column
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -30,14 +31,6 @@ def get_docs():
 def get_sources():
     return jsonify([{'id': query.query_id, 'text': query.text} for query in _corpus.queries])
 
-# @app.route('/api/delete-doc', methods=['DELETE'])
-# def delete_doc_query():
-#     query_id = request.get('query_id')
-#     doc_id = request.get('doc_id')
-#     update_feedback(int(query_id), doc_id)
-#     print('update feedback')
-#     return jsonify({'msg': 'Done'})
-
 @app.route('/api/delete-doc', methods=['GET'])
 def delete_doc_query():
     query_id = request.args.get('query_id')
@@ -58,6 +51,14 @@ def delete_doc_query():
                 for doc in returned_docs
             ])
     return jsonify({'mdg': 'Error'})
+
+@app.route('/api/get-metric', methods=['GET'])
+def get_metric():
+    metric = request.args.get('metric')
+    if metric:
+        print('metric: ', metric)
+        return jsonify({'queries_id': [item[0][0] for item in obtain_column(metric)][:50], 'boolean': [float(item[0][1]) for item in obtain_column(metric)][:50], 'extended': [float(item[1][1]) for item in obtain_column(metric)][:50]})
+    return jsonify({'msg':'error'})
 
 if __name__ == '__main__':
     app.run(debug=True, port=4000)
