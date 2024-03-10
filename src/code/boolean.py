@@ -45,4 +45,4 @@ def boolean(query_dnf, tokenized_docs):
                 
         # If the document matches all components of the query, add it to the list
 
-    return matching_documents
+    return matching_documents,''

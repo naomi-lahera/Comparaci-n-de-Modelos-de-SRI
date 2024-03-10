@@ -38,4 +38,4 @@ def update_feedback(id_query, doc_id):
     
     # Guarda el diccionario modificado en el archivo
     joblib.dump(feedback, filename)
-    print(f"Archivo {filename} modificado.")
+    # print(f"Archivo {filename} modificado.")

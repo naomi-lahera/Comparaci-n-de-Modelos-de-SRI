@@ -134,10 +134,10 @@ class MetricsCalculator:
         self.NR = relevant - retrieved
         self.NI= irrelevant - retrieved
 
-        # print("RR: ", self.RR)
-        # print("RI: ", self.RI)
-        # print("NR: ", self.NR)
-        # print("NI: ", self.NI)
+        # # print("RR: ", self.RR)
+        # # print("RI: ", self.RI)
+        # # print("NR: ", self.NR)
+        # # print("NI: ", self.NI)
         # raise Exception("Stop")
         
     def precision(self):
@@ -154,7 +154,7 @@ class MetricsCalculator:
             return 0
         return len(self.RR) / len(union)
 
-    def f_measure(self, beta=1):
+    def f_measure(self, beta=0):
         """Calculates F-measure."""
         precision = self.precision()
         recall = self.recall()
@@ -202,17 +202,18 @@ def main(model):
                 break
             # Obtén los documentos recuperados para esta consulta
             try:
-                retrieved_dict_keys = getDocs(query_id,model).keys()
+                retrieved_dict_keys, _ = getDocs(query_id,model)
+                retrieved_dict_keys = retrieved_dict_keys.keys()
             except:
-                retrieved_dict_keys = getDocs(query_id,model)
+                retrieved_dict_keys, _ = getDocs(query_id,model)
             
             retrieved_documents = set(int(key) for key in retrieved_dict_keys)
             
             # Construye los conjuntos de documentos relevantes e irrelevantes a esta consulta
             relevant_documents, irrelevant_documents = RelevanceDocumentSetBuilder.build_relevance_document_sets(retrieved_documents, query_id, cranfield_data.qrels)
 
-            # print("Relevantes: ", relevant_documents)
-            # print("Irrelevantes: ", irrelevant_documents)
+            # # print("Relevantes: ", relevant_documents)
+            # # print("Irrelevantes: ", irrelevant_documents)
 
             # Creamos una instancia de MetricsCalculator con los conjuntos relevantes, irrelevantes y recuperados
             metrics_calculator = MetricsCalculator(relevant_documents, irrelevant_documents, retrieved_documents)

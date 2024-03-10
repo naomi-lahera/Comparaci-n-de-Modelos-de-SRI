@@ -48,8 +48,8 @@ export class ToolbarComponent {
                           icon: 'pi pi-folder-open'
                       },
                       {
-                          label: 'Print',
-                          icon: 'pi pi-print'
+                          label: '# print',
+                          icon: 'pi pi-# print'
                       }
                   ]
               },

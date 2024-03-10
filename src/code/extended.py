@@ -57,11 +57,11 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
     returned_docs = []
     
     for doc in _corpus.docs_iter:
-        # print('doc: ', doc)
+        # # print('doc: ', doc)
         doc_index = int(doc[0])
         if query_id in feedback and doc_index in feedback[query_id]:
             print('doc_index : ', doc_index)
-            # continue 
+            continue 
         else:
        
             _or = 0
@@ -89,7 +89,7 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
                             continue
                         tfxidf_term = get_tfidf_value(doc_index, term_index, matrix)
                         _and += math.pow(1 - tfxidf_term, literals_total) 
-                    #print(f'math.pow {_or} / {_or_count}, 1/{literals_total}')
+                    ## print(f'math.pow {_or} / {_or_count}, 1/{literals_total}')
                     _or += math.pow(1 - math.pow(_and/_and_count, 1/literals_total), literals_total)
             value = math.pow(_or / _or_count, literals_total)
             scores.update({doc_index: value})
@@ -98,7 +98,7 @@ def boolean_extended(query_id, query_list, query_dnf, _corpus, matrix, feature_n
     returned_docs = [item for item in returned_docs if item[0] in scores]
     
     # for i, (doc, val) in enumerate(scores.items()):
-    #     print(f'{doc} , {val}')
+    #     # print(f'{doc} , {val}')
     
     # scores = {k: v for k, v in scores.items() if v > 0.}
     return scores, returned_docs

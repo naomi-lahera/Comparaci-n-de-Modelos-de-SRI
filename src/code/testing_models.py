@@ -62,9 +62,10 @@ def get_similar_docs(query_id, method):
     - La función utiliza el método `query_to_dnf` para convertir la consulta en su forma Disjunctive Normal Form (DNF).
     - Dependiendo del método especificado, utiliza el modelo booleano o una versión extendida del modelo booleano para calcular las puntuaciones.
     """
-    print(type(query_id))
+    # print(type(query_id))
     query =_corpus.queries[int(query_id)][1]
-    print(type(query))
+    # print(type(query))
+    
     query_dnf = query_to_dnf(query)
     query_literals = get_literals_from_dnf(query_dnf)
     init()
@@ -106,5 +107,6 @@ def update_feedback_testing_models(query_id, doc_id):
     global feedback
     update_feedback(query_id, doc_id)
     feedback = joblib.load(filename)
-    print(feedback)
+    # print(feedback)
+    
     

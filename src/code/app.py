@@ -11,9 +11,9 @@ CORS(app)
 def get_docs():
     query_id = request.args.get('query_id')
     docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
-    # print(docs_dict)
-    # print('docs_dict: ', len(docs_dict))
-    # print('docs_dict: ', len(returned_docs))
+    # # print(docs_dict)
+    # # print('docs_dict: ', len(docs_dict))
+    # # print('docs_dict: ', len(returned_docs))
     if query_id:
         return jsonify(
             [
@@ -36,10 +36,10 @@ def delete_doc_query():
     query_id = request.args.get('query_id')
     doc_id = request.args.get('doc_id')
     update_feedback_testing_models(int(query_id), int(doc_id))
-    # print('update feedback')
+    # # print('update feedback')
     docs_dict, returned_docs = get_similar_docs(int(query_id), 'extended')
-    # print(docs_dict)
-    # print(docs_dict)
+    # # print(docs_dict)
+    # # print(docs_dict)
     if query_id and doc_id:
         return jsonify(
             [
